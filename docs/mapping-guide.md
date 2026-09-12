@@ -101,3 +101,41 @@ Map `CathDateTime` ← `cath_dt`, `CathOption` ← `cath_option`, and the nested
 `Diagnostic/CodeId` ← `cath_dx_code`. Generate → 3 `CardiacCath` (PT-0002 run 1 has
 two) with 4 nested `Diagnostic` findings, and `CATH-1A` correctly carries two of them
 — a repeating list inside a repeating list.
+
+## Passing ELSO's import validator (XSD-valid is not enough)
+The bundled XSD only checks structure; ELSO's **import** validator additionally rejects
+**empty required fields** and **codes outside its lists**. A file can be XSD-valid yet
+rejected. Two rules follow from this:
+
+**1. Every run must carry the required collections — with real values.** ELSO requires,
+per `RunXML`:
+- `Modes / ConcurrentMode / Mode` — at least one mode with `StartTime`, `EndTime`, `ECLSMode`.
+- `Equipment / {Pumps, MembraneLungs, Consoles}` — each device needs `DeviceId`,
+  `AddedReplaced`, `StartTime`, `EndTime`.
+- `ComplicationsEnabled` and `InfectionsEnabled` (0/1) on the run.
+
+The converter never *invents* these — you must map them from your REDCap export. Any
+required leaf left empty is flagged as an **error** on the Validate tab (and would be
+rejected on upload). Optional collections you have no data for are simply omitted; the
+generator drops an optional branch rather than emit empty required shells inside it.
+
+**2. Codes must be real ELSO values.** `DiagnosisCode` is an ICD-10 code (e.g. `A00`,
+`I47.2`); `ComplicationCode`, `ECLSMode`, device `DeviceId` and cath `CodeId` are ELSO
+numeric codes. Do not recode them to arbitrary integers — map the actual code through, or
+crosswalk on the Recode tab. Coded values outside the ELSO list are flagged as errors.
+
+### The bundled sample is a complete, upload-valid example
+`samples/make_sample_redcap.R` now includes `mode`, `pumps`, `lungs`, `consoles`
+instruments and valid codes, so the bundled sample can produce a file that passes the
+public XSD test portal (`registry.elso.org/xmlimporttestpublic`). `samples/sample_mapping.json`
+is a ready-made mapping template for it: after **Load bundled synthetic sample**, set the
+grouping keys and sub-collection bindings (below), then **Load template** to fill the
+field map/recodes/date-formats in one step, and **Generate**.
+
+Grouping: patient key `.subject`, patient/hosp `demographics`, run `run`, run key `run_no`.
+Bind: Diagnoses←`diagnosis`(`dx_run`), Complications←`complication`(`comp_run`),
+Modes/ConcurrentMode/Mode←`mode`(`mode_run`),
+Equipment/Pumps/…/Device←`pumps`(`pump_run`),
+Equipment/MembraneLungs/…/Device←`lungs`(`lung_run`),
+Equipment/Consoles/…/Device←`consoles`(`console_run`),
+CardiacCath←`cath`(`cc_run`, key `cath_id`), nested Diagnostic←`cath_dx`(`dx_cath`).

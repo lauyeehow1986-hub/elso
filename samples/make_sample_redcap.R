@@ -36,6 +36,8 @@ runs <- data.frame(
   support_type = c("1", "1", "2", "3"),        # already ELSO SupportType codes
   ph_pre       = c("7.20", "7.35", "7.11", "7.44"),
   completed_by = c("YH", "YH", "YH", "team"),
+  comp_enabled = c("1", "1", "0", "1"),        # ComplicationsEnabled (1 where a run has complications)
+  inf_enabled  = c("0", "0", "0", "0"),        # InfectionsEnabled (no infections in this sample)
   stringsAsFactors = FALSE)
 
 complications <- data.frame(
@@ -68,7 +70,51 @@ caths <- data.frame(
 cath_dx <- data.frame(
   patient_id   = c("ECMO-PT-0001", "ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
   dx_cath      = c("CATH-1A", "CATH-1A", "CATH-2A", "CATH-2B"),
-  cath_dx_code = c("D100", "D101", "D200", "D300"),
+  cath_dx_code = c("3", "5", "3", "5"),   # ELSO CardiacCath diagnostic CodeIds
+  stringsAsFactors = FALSE)
+
+# ---- run-level required collections (ELSO import mandates these per run) -----
+# Modes: every run needs >=1 ECLS mode with a start, end and mode code.
+modes <- data.frame(
+  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002", "ECMO-PT-0003"),
+  mode_run   = c("1", "1", "2", "1"),
+  mode_start = c("01/02/2024 06:00:00", "05/02/2024 12:00:00",
+                 "10/02/2024 08:00:00", "19/03/2024 02:00:00"),
+  mode_end   = c("06/02/2024 06:00:00", "09/02/2024 12:00:00",
+                 "14/02/2024 08:00:00", "22/03/2024 02:00:00"),
+  mode_ecls  = c("1", "1", "2", "1"),          # ELSO ECLSMode codes
+  stringsAsFactors = FALSE)
+
+# Equipment: pump / membrane lung / console, each with a device id + start/end.
+pumps <- data.frame(
+  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002", "ECMO-PT-0003"),
+  pump_run   = c("1", "1", "2", "1"),
+  pump_devid = c("150", "150", "211", "150"),  # ELSO pump device codes
+  pump_added = c("1", "1", "1", "1"),          # AddedReplaced (1=added)
+  pump_start = c("01/02/2024 06:00:00", "05/02/2024 12:00:00",
+                 "10/02/2024 08:00:00", "19/03/2024 02:00:00"),
+  pump_end   = c("06/02/2024 06:00:00", "09/02/2024 12:00:00",
+                 "14/02/2024 08:00:00", "22/03/2024 02:00:00"),
+  stringsAsFactors = FALSE)
+lungs <- data.frame(
+  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002", "ECMO-PT-0003"),
+  lung_run   = c("1", "1", "2", "1"),
+  lung_devid = c("220", "220", "220", "220"),  # ELSO membrane-lung device codes
+  lung_added = c("1", "1", "1", "1"),
+  lung_start = c("01/02/2024 06:00:00", "05/02/2024 12:00:00",
+                 "10/02/2024 08:00:00", "19/03/2024 02:00:00"),
+  lung_end   = c("06/02/2024 06:00:00", "09/02/2024 12:00:00",
+                 "14/02/2024 08:00:00", "22/03/2024 02:00:00"),
+  stringsAsFactors = FALSE)
+consoles <- data.frame(
+  patient_id  = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002", "ECMO-PT-0003"),
+  console_run = c("1", "1", "2", "1"),
+  console_devid = c("25", "25", "25", "25"),   # ELSO console device codes
+  console_added = c("1", "1", "1", "1"),
+  console_start = c("01/02/2024 06:00:00", "05/02/2024 12:00:00",
+                    "10/02/2024 08:00:00", "19/03/2024 02:00:00"),
+  console_end   = c("06/02/2024 06:00:00", "09/02/2024 12:00:00",
+                    "14/02/2024 08:00:00", "22/03/2024 02:00:00"),
   stringsAsFactors = FALSE)
 
 ## ---- data dictionary + choices ---------------------------------------------
@@ -81,23 +127,45 @@ dd <- data.frame(
   variable = c("patient_id","sex","dob","race","admit_dt","discharge_dt","discharged_alive",
                "run_no","support_type","ph_pre","completed_by",
                "comp_run","comp_code","comp_dt","dx_run","dx_code","dx_primary",
-               "cc_run","cath_id","cath_option","cath_dt","dx_cath","cath_dx_code"),
+               "cc_run","cath_id","cath_option","cath_dt","dx_cath","cath_dx_code",
+               "mode_run","mode_start","mode_end","mode_ecls",
+               "pump_run","pump_devid","pump_start","pump_end",
+               "lung_run","lung_devid","lung_start","lung_end",
+               "console_run","console_devid","console_start","console_end"),
   form_name= c(rep("demographics",7), rep("run",4), rep("complication",3), rep("diagnosis",3),
-               rep("cath",4), rep("cath_dx",2)),
+               rep("cath",4), rep("cath_dx",2),
+               rep("mode",4), rep("pumps",4), rep("lungs",4), rep("consoles",4)),
   label    = c("Patient ID","Sex","Date of birth","Race","Admission date/time",
                "Discharge date/time","Discharged alive","Run number","Support type",
                "Pre-ECLS pH","Completed by","Complication run","Complication code",
                "Complication date/time","Diagnosis run","Diagnosis code","Primary diagnosis",
                "Cath run","Cath ID","Cath option","Cath date/time",
-               "Cath (for diagnostic)","Cath diagnostic code"),
+               "Cath (for diagnostic)","Cath diagnostic code",
+               "Mode run","Mode start","Mode end","ECLS mode",
+               "Pump run","Pump device id","Pump start","Pump end",
+               "Lung run","Lung device id","Lung start","Lung end",
+               "Console run","Console device id","Console start","Console end"),
   type     = c("text","radio","text","radio","datetime_seconds_dmy","datetime_seconds_dmy","radio",
                "text","text","text","text","text","text","datetime_seconds_dmy","text","text","radio",
-               "text","text","text","datetime_seconds_dmy","text","text"),
+               "text","text","text","datetime_seconds_dmy","text","text",
+               "text","datetime_seconds_dmy","datetime_seconds_dmy","text",
+               "text","text","datetime_seconds_dmy","datetime_seconds_dmy",
+               "text","text","datetime_seconds_dmy","datetime_seconds_dmy",
+               "text","text","datetime_seconds_dmy","datetime_seconds_dmy"),
   choices  = c("", "0, Unknown | 1, Male | 2, Female", "",
                "0, Unknown | 1, Asian | 2, Black | 3, Hispanic | 4, White", "", "",
                "0, No | 1, Yes | 2, On ECMO", "","","","","","","","","",
-               "0, No | 1, Yes", "","","","","",""),
+               "0, No | 1, Yes", "","","","","","",
+               "","","","",  "","","","",  "","","","",  "","","",""),
   stringsAsFactors = FALSE)
+dd <- rbind(dd, data.frame(
+  variable = c("comp_enabled","inf_enabled","pump_added","lung_added","console_added"),
+  form_name= c("run","run","pumps","lungs","consoles"),
+  label    = c("Complications enabled","Infections enabled",
+               "Pump added/replaced","Lung added/replaced","Console added/replaced"),
+  type     = c("text","text","text","text","text"),
+  choices  = c("","","","",""),
+  stringsAsFactors = FALSE))
 write.csv(dd, file.path(outdir, "sample_redcap_dictionary.csv"), row.names = FALSE)
 
 ## ---- flat records CSV (REDCap-style long export) ---------------------------
@@ -120,7 +188,11 @@ flat <- rbind(bind_form(patients, "demographics"),
               bind_form(complications, "complication"),
               bind_form(diagnoses, "diagnosis"),
               bind_form(caths, "cath"),
-              bind_form(cath_dx, "cath_dx"))
+              bind_form(cath_dx, "cath_dx"),
+              bind_form(modes, "mode"),
+              bind_form(pumps, "pumps"),
+              bind_form(lungs, "lungs"),
+              bind_form(consoles, "consoles"))
 write.csv(flat, file.path(outdir, "sample_redcap_records.csv"), row.names = FALSE)
 
 ## ---- REDCap ODM XML --------------------------------------------------------
@@ -142,7 +214,8 @@ for (v in names(choice_map)) {
                           names(cl), esc(unname(cl))), collapse = "")
   cl_defs <- c(cl_defs, sprintf('<CodeList OID="cl_%s" Name="%s" DataType="text">%s</CodeList>', v, v, items))
 }
-forms <- c("demographics","run","complication","diagnosis","cath","cath_dx")
+forms <- c("demographics","run","complication","diagnosis","cath","cath_dx",
+           "mode","pumps","lungs","consoles")
 form_defs <- character(0); ig_defs <- character(0)
 for (f in forms) {
   vars <- dd$variable[dd$form_name == f]
@@ -176,6 +249,14 @@ for (pid in patients$patient_id) {
   for (k in seq_along(hh)) blocks <- paste0(blocks, form_block(caths, hh[k], "cath", k))
   xx <- which(cath_dx$patient_id == pid)
   for (k in seq_along(xx)) blocks <- paste0(blocks, form_block(cath_dx, xx[k], "cath_dx", k))
+  mm <- which(modes$patient_id == pid)
+  for (k in seq_along(mm)) blocks <- paste0(blocks, form_block(modes, mm[k], "mode", k))
+  pp <- which(pumps$patient_id == pid)
+  for (k in seq_along(pp)) blocks <- paste0(blocks, form_block(pumps, pp[k], "pumps", k))
+  ll <- which(lungs$patient_id == pid)
+  for (k in seq_along(ll)) blocks <- paste0(blocks, form_block(lungs, ll[k], "lungs", k))
+  nn <- which(consoles$patient_id == pid)
+  for (k in seq_along(nn)) blocks <- paste0(blocks, form_block(consoles, nn[k], "consoles", k))
   subj_blocks <- c(subj_blocks, sprintf(
     '<SubjectData SubjectKey="%s"><StudyEventData StudyEventOID="ev.baseline">%s</StudyEventData></SubjectData>',
     pid, blocks))

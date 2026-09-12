@@ -6,10 +6,16 @@
 #   * leaf with a value            -> <Tag>value</Tag>
 #   * required leaf, no value      -> <Tag/>            (empty allowed; string type)
 #   * required non-repeating group -> always emitted (empty if it has no content)
-#   * optional non-repeating group -> emitted only if it gained children
-#   * repeating group with N rows  -> N instances
+#   * optional non-repeating group -> emitted only if a descendant carries a value
+#   * repeating group with N rows  -> N instances (an instance with no value is
+#                                     dropped unless its element is required)
 #   * required repeating, 0 rows   -> one empty instance (to satisfy minOccurs>=1)
 #   * optional repeating, 0 rows   -> skipped
+#
+# An OPTIONAL container that ends up holding only empty required-leaf shells (no
+# real data) is removed entirely — emitting it would present empty required
+# fields (e.g. an empty Device/ComplicationFailure or TransferOutOfAndBackToCenter)
+# that the ELSO import validator rejects even though the lenient XSD allows them.
 #
 # A node only consumes a scope-collection when its path is a genuine REPEAT
 # LEVEL (a key the grouping stage populates). Some ELSO list *wrappers*
@@ -33,6 +39,11 @@ suppressPackageStartupMessages(library(xml2))
 el_is_repeating <- function(maxO)
   identical(maxO, "unbounded") ||
   (!is.na(suppressWarnings(as.integer(maxO))) && as.integer(maxO) > 1L)
+
+# TRUE if this element carries any real text somewhere beneath it. xml_text on a
+# container concatenates all descendant text, so an element whose subtree is only
+# empty shells (<A><B/></A>) yields "" and counts as having no value.
+el_has_value <- function(node) nzchar(el_trim(xml_text(node)))
 
 el_empty_scope <- function()
   list(row = setNames(character(0), character(0)),
@@ -89,19 +100,25 @@ el_emit <- function(node, path, scope, parent, map, recode, datefmt, leaf_kind,
   if (el_is_repeating(node$maxOccurs) && path %in% repeat_levels) {
     kind  <- el_level_kind(path)
     rows  <- el_child_scopes(kind, path, scope)
-    if (length(rows) == 0L && required) rows <- list(el_empty_scope())
+    forced <- length(rows) == 0L && required
+    if (forced) rows <- list(el_empty_scope())
     for (child_scope in rows) {
       inst <- xml_add_child(parent, node$name)
       for (ch in node$children)
         el_emit(ch, paste0(path, "/", ch$name), child_scope, inst,
                 map, recode, datefmt, leaf_kind, repeat_levels)
+      # drop a data-derived instance that carried no value; keep only the single
+      # forced empty instance that a required repeat needs to satisfy minOccurs.
+      if (!forced && !el_has_value(inst)) xml_remove(inst)
     }
   } else {
     grp <- xml_add_child(parent, node$name)
     for (ch in node$children)
       el_emit(ch, paste0(path, "/", ch$name), scope, grp,
               map, recode, datefmt, leaf_kind, repeat_levels)
-    if (length(xml_children(grp)) == 0L && !required) xml_remove(grp)
+    # an optional group with no real content is dropped; emitting it would show
+    # empty required leaves that ELSO's import validator rejects.
+    if (!required && !el_has_value(grp)) xml_remove(grp)
   }
 }
 

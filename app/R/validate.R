@@ -8,13 +8,16 @@
 
 suppressPackageStartupMessages(library(xml2))
 
-# element path relative to PatientXML, indices stripped, prefixes removed
+# element path relative to PatientXML, built from ancestor LOCAL names.
+# NB: xml_path() returns "/*/*[1]/..." for a default-namespaced document
+# (libxml2 has no prefix to emit), so it cannot be used to recover element
+# names. xml_name() returns the local name regardless of namespace, and the
+# "*" wildcard in the XPath matches namespaced elements, so walk ancestors.
 el_doc_path <- function(node) {
-  p <- xml_path(node)                     # /d1:PatientList/d1:PatientXML/...
-  p <- gsub("\\[[0-9]+\\]", "", p)
-  p <- gsub("/[a-zA-Z0-9]+:", "/", p)     # strip ns prefixes
-  p <- sub("^/PatientList/", "", p)
-  p
+  anc <- xml2::xml_find_all(node, "ancestor-or-self::*")  # root -> node order
+  nms <- xml2::xml_name(anc)
+  nms <- nms[nms != "PatientList"]                        # drop the root
+  paste(nms, collapse = "/")
 }
 
 el_num <- function(x) suppressWarnings(as.numeric(x))
@@ -41,8 +44,10 @@ el_semantic_check <- function(cat, doc) {
         add(path, val, sprintf("UniqueId must be 10-20 chars (got %d)", n), "error")
     }
     if (el_blank(val)) {
+      # An empty required leaf is rejected by ELSO's import validator even
+      # though the lenient XSD permits it, so flag it as an error.
       if (isTRUE(row$required) && !identical(row$name, "UniqueId"))
-        add(path, "", "required field is empty", "warning")
+        add(path, "", "required field is empty (ELSO import will reject)", "error")
       next
     }
     # coded membership
@@ -51,10 +56,10 @@ el_semantic_check <- function(cat, doc) {
       if (!is.null(cl) && !(val %in% cl$code))
         add(path, val, "value not in ELSO code list", "error")
     }
-    # date parse (already ELSO-formatted here; sanity check)
+    # date parse (already ELSO-formatted here; sanity check). el_parse_time takes
+    # a single format or "auto" (EL_DATE_FORMATS covers MM/DD/YYYY[ HH:MM]).
     if (row$kind %in% c("date", "datetime")) {
-      ok <- !is.na(el_parse_time(val, if (row$kind == "date") "%m/%d/%Y"
-                                       else c("%m/%d/%Y %H:%M", "%m/%d/%Y")))
+      ok <- !is.na(el_parse_time(val, "auto"))
       if (!ok) add(path, val, "unparseable date/datetime", "error")
     }
     # numeric hard range (best-effort key match)

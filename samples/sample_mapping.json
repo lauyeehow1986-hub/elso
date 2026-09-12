@@ -1,0 +1,214 @@
+{
+  "binding": {
+    "patient_key": ".subject",
+    "patient_form": "demographics",
+    "run_form": "run",
+    "run_key_field": "run_no",
+    "subcollections": {
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Diagnoses/Diagnosis": {
+        "form": "diagnosis",
+        "link_field": "dx_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Complications/Complication": {
+        "form": "complication",
+        "link_field": "comp_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode": {
+        "form": "mode",
+        "link_field": "mode_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device": {
+        "form": "pumps",
+        "link_field": "pump_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device": {
+        "form": "lungs",
+        "link_field": "lung_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device": {
+        "form": "consoles",
+        "link_field": "console_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath": {
+        "form": "cath",
+        "link_field": "cc_run",
+        "key_field": "cath_id"
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/Diagnostics/Diagnostic": {
+        "form": "cath_dx",
+        "link_field": "dx_cath",
+        "key_field": ""
+      }
+    }
+  },
+  "map": {
+    "PatientXML/UniqueId": {
+      "source": "patient_id"
+    },
+    "PatientXML/Sex": {
+      "source": "sex"
+    },
+    "PatientXML/Birthdate": {
+      "source": "dob"
+    },
+    "PatientXML/PatientsRaces/Race/RaceCode": {
+      "source": "race"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/AdmitDate": {
+      "source": "admit_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/DischargeDate": {
+      "source": "discharge_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/DischargedAlive": {
+      "source": "discharged_alive"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/RunNo": {
+      "source": "run_no"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/SupportType": {
+      "source": "support_type"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Submission/CompletedBy": {
+      "source": "completed_by"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ComplicationsEnabled": {
+      "source": "comp_enabled"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/InfectionsEnabled": {
+      "source": "inf_enabled"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/AddedReplaced": {
+      "source": "pump_added"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/AddedReplaced": {
+      "source": "lung_added"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/AddedReplaced": {
+      "source": "console_added"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode/StartTime": {
+      "source": "mode_start"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode/EndTime": {
+      "source": "mode_end"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode/ECLSMode": {
+      "source": "mode_ecls"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/DeviceId": {
+      "source": "pump_devid"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/StartTime": {
+      "source": "pump_start"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/EndTime": {
+      "source": "pump_end"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/DeviceId": {
+      "source": "lung_devid"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/StartTime": {
+      "source": "lung_start"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/EndTime": {
+      "source": "lung_end"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/DeviceId": {
+      "source": "console_devid"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/StartTime": {
+      "source": "console_start"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/EndTime": {
+      "source": "console_end"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Diagnoses/Diagnosis/DiagnosisCode": {
+      "source": "dx_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Diagnoses/Diagnosis/Primary": {
+      "source": "dx_primary"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Complications/Complication/ComplicationCode": {
+      "source": "comp_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Complications/Complication/ComplicationDate": {
+      "source": "comp_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/CathOption": {
+      "source": "cath_option"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/CathDateTime": {
+      "source": "cath_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/Diagnostics/Diagnostic/CodeId": {
+      "source": "cath_dx_code"
+    }
+  },
+  "recode": {
+    "PatientXML/Sex": ["0", "1", "2"],
+    "PatientXML/PatientsRaces/Race/RaceCode": ["0", "1", "2", "3", "4"],
+    "PatientXML/HospitalizationList/HospitalizationXML/DischargedAlive": ["0", "1", "2"],
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Diagnoses/Diagnosis/Primary": ["0", "1"]
+  },
+  "datefmt": {
+    "PatientXML/Birthdate": {
+      "input": "auto",
+      "target": "date"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/AdmitDate": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/DischargeDate": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode/StartTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Modes/ConcurrentMode/Mode/EndTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/StartTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Pumps/ConcurrentDevice/Device/EndTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/StartTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/MembraneLungs/ConcurrentDevice/Device/EndTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/StartTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Equipment/Consoles/ConcurrentDevice/Device/EndTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/Complications/Complication/ComplicationDate": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/CathDateTime": {
+      "input": "auto",
+      "target": "datetime"
+    }
+  }
+}
