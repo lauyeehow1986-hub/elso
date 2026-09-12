@@ -10,6 +10,12 @@
 # "run", "complication", "diagnosis" instruments. Patient 2 has TWO runs, and
 # complications/diagnoses link to a run via *_run. Dates are dd/mm/yyyy hh:mm:ss
 # (a common REDCap format that is NOT ELSO's) to exercise date conversion.
+#
+# It also carries a NESTED Cardiac-addenda demo: a "cath" instrument (each row is
+# one pre-ECLS CardiacCath, linked to a run via cc_run and keyed by cath_id) plus
+# a "cath_dx" instrument (each row is one diagnostic finding, linked to its cath
+# via dx_cath -> cath_id). This exercises a repeating list nested inside another
+# repeating list. PT-0002 run 1 has TWO caths, and CATH-1A has TWO diagnostics.
 
 set.seed(7)
 outdir <- "samples"; dir.create(outdir, showWarnings = FALSE)
@@ -46,6 +52,25 @@ diagnoses <- data.frame(
   dx_primary = c("1", "1", "0"),
   stringsAsFactors = FALSE)
 
+# Cardiac addenda — pre-ECLS cardiac catheterisations (repeat inside a run).
+# cc_run links a cath to its run (-> run_no); cath_id is the cath's own key that
+# the nested diagnostics point back to. PT-0002 run 1 has two caths.
+caths <- data.frame(
+  patient_id  = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
+  cc_run      = c("1", "1", "1"),
+  cath_id     = c("CATH-1A", "CATH-2A", "CATH-2B"),
+  cath_option = c("1", "1", "2"),
+  cath_dt     = c("30/01/2024 10:00:00", "04/02/2024 20:05:00", "06/02/2024 11:30:00"),
+  stringsAsFactors = FALSE)
+
+# Nested diagnostics — each row is one finding inside a specific cath (list in a
+# list). dx_cath links to cath_id. CATH-1A carries two diagnostics.
+cath_dx <- data.frame(
+  patient_id   = c("ECMO-PT-0001", "ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
+  dx_cath      = c("CATH-1A", "CATH-1A", "CATH-2A", "CATH-2B"),
+  cath_dx_code = c("D100", "D101", "D200", "D300"),
+  stringsAsFactors = FALSE)
+
 ## ---- data dictionary + choices ---------------------------------------------
 codelists <- list(
   sex   = c("0"="Unknown","1"="Male","2"="Female"),
@@ -55,18 +80,23 @@ codelists <- list(
 dd <- data.frame(
   variable = c("patient_id","sex","dob","race","admit_dt","discharge_dt","discharged_alive",
                "run_no","support_type","ph_pre","completed_by",
-               "comp_run","comp_code","comp_dt","dx_run","dx_code","dx_primary"),
-  form_name= c(rep("demographics",7), rep("run",4), rep("complication",3), rep("diagnosis",3)),
+               "comp_run","comp_code","comp_dt","dx_run","dx_code","dx_primary",
+               "cc_run","cath_id","cath_option","cath_dt","dx_cath","cath_dx_code"),
+  form_name= c(rep("demographics",7), rep("run",4), rep("complication",3), rep("diagnosis",3),
+               rep("cath",4), rep("cath_dx",2)),
   label    = c("Patient ID","Sex","Date of birth","Race","Admission date/time",
                "Discharge date/time","Discharged alive","Run number","Support type",
                "Pre-ECLS pH","Completed by","Complication run","Complication code",
-               "Complication date/time","Diagnosis run","Diagnosis code","Primary diagnosis"),
+               "Complication date/time","Diagnosis run","Diagnosis code","Primary diagnosis",
+               "Cath run","Cath ID","Cath option","Cath date/time",
+               "Cath (for diagnostic)","Cath diagnostic code"),
   type     = c("text","radio","text","radio","datetime_seconds_dmy","datetime_seconds_dmy","radio",
-               "text","text","text","text","text","text","datetime_seconds_dmy","text","text","radio"),
+               "text","text","text","text","text","text","datetime_seconds_dmy","text","text","radio",
+               "text","text","text","datetime_seconds_dmy","text","text"),
   choices  = c("", "0, Unknown | 1, Male | 2, Female", "",
                "0, Unknown | 1, Asian | 2, Black | 3, Hispanic | 4, White", "", "",
                "0, No | 1, Yes | 2, On ECMO", "","","","","","","","","",
-               "0, No | 1, Yes"),
+               "0, No | 1, Yes", "","","","","",""),
   stringsAsFactors = FALSE)
 write.csv(dd, file.path(outdir, "sample_redcap_dictionary.csv"), row.names = FALSE)
 
@@ -88,7 +118,9 @@ bind_form <- function(df, form) {
 flat <- rbind(bind_form(patients, "demographics"),
               bind_form(runs, "run"),
               bind_form(complications, "complication"),
-              bind_form(diagnoses, "diagnosis"))
+              bind_form(diagnoses, "diagnosis"),
+              bind_form(caths, "cath"),
+              bind_form(cath_dx, "cath_dx"))
 write.csv(flat, file.path(outdir, "sample_redcap_records.csv"), row.names = FALSE)
 
 ## ---- REDCap ODM XML --------------------------------------------------------
@@ -110,7 +142,7 @@ for (v in names(choice_map)) {
                           names(cl), esc(unname(cl))), collapse = "")
   cl_defs <- c(cl_defs, sprintf('<CodeList OID="cl_%s" Name="%s" DataType="text">%s</CodeList>', v, v, items))
 }
-forms <- c("demographics","run","complication","diagnosis")
+forms <- c("demographics","run","complication","diagnosis","cath","cath_dx")
 form_defs <- character(0); ig_defs <- character(0)
 for (f in forms) {
   vars <- dd$variable[dd$form_name == f]
@@ -140,6 +172,10 @@ for (pid in patients$patient_id) {
   for (k in seq_along(cc)) blocks <- paste0(blocks, form_block(complications, cc[k], "complication", k))
   gg <- which(diagnoses$patient_id == pid)
   for (k in seq_along(gg)) blocks <- paste0(blocks, form_block(diagnoses, gg[k], "diagnosis", k))
+  hh <- which(caths$patient_id == pid)
+  for (k in seq_along(hh)) blocks <- paste0(blocks, form_block(caths, hh[k], "cath", k))
+  xx <- which(cath_dx$patient_id == pid)
+  for (k in seq_along(xx)) blocks <- paste0(blocks, form_block(cath_dx, xx[k], "cath_dx", k))
   subj_blocks <- c(subj_blocks, sprintf(
     '<SubjectData SubjectKey="%s"><StudyEventData StudyEventOID="ev.baseline">%s</StudyEventData></SubjectData>',
     pid, blocks))
@@ -159,3 +195,5 @@ writeLines(odm, file.path(outdir, "sample_redcap.odm.xml"))
 cat("Wrote samples/sample_redcap.odm.xml,",
     "sample_redcap_records.csv, sample_redcap_dictionary.csv\n")
 cat("Patients: 3 (PT-0002 has 2 runs); complications & diagnoses link via *_run.\n")
+cat("Cardiac addenda: caths link to runs via cc_run; nested cath_dx link via",
+    "dx_cath -> cath_id (PT-0002 run 1 has 2 caths; CATH-1A has 2 diagnostics).\n")

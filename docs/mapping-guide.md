@@ -89,3 +89,15 @@ within a patient are preserved). The controller confirms adequacy before release
    `complication` (link `comp_run`).
 5. Validate → XSD valid, 0 errors. Generate → 3 `PatientXML`, 4 `RunXML`, dates in
    `MM/DD/YYYY`, codes recoded.
+
+### Nested addenda (same bundled sample)
+The sample also carries a Cardiac-addenda demo. In the **Cardiac addenda** block:
+- Bind **CardiacCath** (the *Pre-ECLS* variant): instrument `cath`, link field
+  `cc_run` (→ run key), **Key field** `cath_id`.
+- Bind its nested **Diagnostic**: instrument `cath_dx`, link field `dx_cath`
+  (→ the cath's `cath_id`).
+
+Map `CathDateTime` ← `cath_dt`, `CathOption` ← `cath_option`, and the nested
+`Diagnostic/CodeId` ← `cath_dx_code`. Generate → 3 `CardiacCath` (PT-0002 run 1 has
+two) with 4 nested `Diagnostic` findings, and `CATH-1A` correctly carries two of them
+— a repeating list inside a repeating list.
