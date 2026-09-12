@@ -97,5 +97,4 @@ the Shiny UI. Full-dataset catalogue (356 leaves, 83 required, 75 coded) built f
 official spec.
 
 ## Repo
-`origin` = https://github.com/lauyeehow1986-hub/elso.git (branch
-`claude/redcap-elso-xml-converter-ee14cb`).
+`origin` = https://github.com/lauyeehow1986-hub/elso.git (default branch `main`).
