@@ -1,0 +1,44 @@
+# --- Secrets / key material — NEVER commit ---
+*.key
+keys/
+*.pem
+*.jks
+*.keystore
+
+# --- Patient data & de-identification artifacts — NEVER commit ---
+# Only synthetic data under samples/ is allowed in the repo.
+/inputs/
+/outputs/
+crosswalk.enc
+*.deid.csv
+*.deid.xlsx
+manifest.json
+audit.log
+certificate.json
+signatures/
+# Project working folders created by the app (portable projects live outside the repo)
+work/
+*_bundle.zip
+
+# --- Bundled portable runtime (shipped in release zips, not in git) ---
+/bin/
+/models/
+
+# --- R ---
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# --- Python engine env (bundled, not committed) ---
+__pycache__/
+*.pyc
+/app/python/.venv/
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+.vscode/

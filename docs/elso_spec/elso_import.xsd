@@ -1,0 +1,962 @@
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:run-schema" targetNamespace="urn:run-schema">
+  <xsd:element name="PatientList">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="PatientXML" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="UniqueId" minOccurs="1" maxOccurs="1">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="10" />
+                    <xsd:maxLength value="20" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element type="xsd:string" name="LocalUniqueId" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="CenterNo" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="Sex" minOccurs="1" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="Birthdate" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="PatientsRaces" minOccurs="0" maxOccurs="1">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element name="Race" maxOccurs="9" minOccurs="0">
+                        <xsd:complexType>
+                          <xsd:sequence>
+                            <xsd:element type="xsd:string" name="RaceCode" />
+                          </xsd:sequence>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>
+                <xsd:element type="xsd:string" name="BirthWeight" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="GestAge" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="Apgar1" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="Apgar5" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="Delivery" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="MaternalAge" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="CDH" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="CDHRepair" minOccurs="0" maxOccurs="1" />
+                <xsd:element type="xsd:string" name="CDHDateTime" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="HospitalizationList" minOccurs="1" maxOccurs="1">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element name="HospitalizationXML" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:complexType>
+                          <xsd:all>
+                            <xsd:element type="xsd:string" name="AdmitDate" minOccurs="1" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="AdmissionHeight" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="AdmissionWeight" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="DischargeLocation" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="DischargedAlive" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="DischargeDate" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="DeathDate" minOccurs="0" maxOccurs="1" />
+							<xsd:element type="xsd:string" name="Transported" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="TransferELSOCenter" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="TransferNonELSOCenter" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="ReceiveELSOCenter" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="ReceiveNonELSOCenter" minOccurs="0" maxOccurs="1" />
+                            <xsd:element type="xsd:string" name="MobileECMO" minOccurs="0" maxOccurs="1" />
+                            <xsd:element name="RunList">
+                              <xsd:complexType>
+                                <xsd:sequence>
+                                  <xsd:element name="RunXML" minOccurs="1" maxOccurs="unbounded">
+                                    <xsd:complexType>
+                                      <xsd:all>
+                                        <xsd:element name="RunInfo" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="RunNo" minOccurs="1" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="SupportType" minOccurs="1" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="HeightUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AdmissionHeight" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="WeightUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AdmissionWeight" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Intubation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="IntubationDate" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="InvasiveVentilation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="InvasiveVentilationDT" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PreECLSArrest" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Transplant" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Trauma" minOccurs="0" maxOccurs="1" />
+											  <xsd:element type="xsd:string" name="TransferOutAndBackToCenter" minOccurs="0" maxOccurs="1" />
+											  <xsd:element name="TransfersOutOfAndBackToCenters" minOccurs="0" maxOccurs="1">
+												  <xsd:complexType>
+													<xsd:sequence>
+													  <xsd:element name="TransferOutOfAndBackToCenter" minOccurs="1" maxOccurs="unbounded">
+														<xsd:complexType>
+														  <xsd:sequence>
+															<xsd:element type="xsd:string" name="TransferToCenter" minOccurs="1" maxOccurs="1" />
+															<xsd:element type="xsd:string" name="TransferToELSOCenter" minOccurs="0" maxOccurs="1" />
+															<xsd:element type="xsd:string" name="TransferToNonELSOCenter" minOccurs="0" maxOccurs="1" />
+															<xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+															<xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+														  </xsd:sequence>
+														</xsd:complexType>
+													  </xsd:element>
+													</xsd:sequence>
+												  </xsd:complexType>
+											  </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="PreECLSAssessment" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element name="BloodGas" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="BloodGasTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="pHUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="pH" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PCO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="FiO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HCO3Unknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HCO3" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SaO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SpO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Lactate" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="VentSetting" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="VentSettingTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="VentTypeUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="VentilatorType" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HandBagging" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Rate" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DeltaP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PIP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PEEP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MeanAirwayPressure" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HighFrequencyRate" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="Hemodynamic" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="HemodynamicTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SBPUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DBPUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MeanBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SvO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PCWP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="CI" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="PreECLSSupport" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="MechanicalScUsed" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="RenPulOtherScUsed" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MedicationsScUsed" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VasoactivelScUsed" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="Support" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Code" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="ECLSAssessment" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element name="BloodGas" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="BloodGasTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="pHUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="pH" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PCO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="FiO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HCO3Unknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HCO3" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SaO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SpO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Lactate" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="VentSetting" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="VentSettingTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="VentTypeUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="VentilatorType" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HandBagging" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Rate" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DeltaP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PIP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PEEP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MeanAirwayPressure" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="HighFrequencyRate" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="Hemodynamic" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="HemodynamicTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SBPUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DBPUnknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MeanBP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SvO2" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PCWP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MPAP" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="CI" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="ECLSCare" minOccurs="1" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="PumpFlow4Unknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PumpFlow4" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PumpFlow24Unknown" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="PumpFlow24" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="UnitWhereECLSReceived" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="OperatingRoom" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="EnteralFeedingTime" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="LevelOfMobilization" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="MaxLevelOfMobilization" minOccurs="0" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Modes" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="ConcurrentMode" minOccurs="1" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Mode" minOccurs="1" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="ECLSMode" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Cannulations" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="Cannulation" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="Percutaneous" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Preexisting" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="SiteId" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="JvCaLR" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="CannulaId" minOccurs="1" maxOccurs="1" />
+													<xsd:element type="xsd:string" name="CannulaSize" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="AddedReplaced" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="ReplaceReasonId" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element name="CannulationPurposes" minOccurs="1" maxOccurs="1">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element name="CannulationPurpose" minOccurs="1" maxOccurs="unbounded">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element type="xsd:string" name="Purpose" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Equipment" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="PumpId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MembraneLungId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="HemofilterId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="HeatExchangerId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="TemperatureRegulationId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ConsoleId" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="MembraneLungs" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="ConcurrentDevice" minOccurs="1" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element name="Device" minOccurs="1" maxOccurs="unbounded">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element type="xsd:string" name="DeviceId" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="AddedReplaced" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="ReplaceReasonId" minOccurs="0" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element name="ComplicationFailure" minOccurs="0" maxOccurs="1">
+                                                                  <xsd:complexType>
+                                                                    <xsd:all>
+                                                                      <xsd:element type="xsd:string" name="ComplicationCode" minOccurs="1" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="ComplicationDate" minOccurs="1" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="ComplicationVerified" minOccurs="0" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="DateEstimated" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:all>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="Pumps" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="ConcurrentDevice" minOccurs="1" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element name="Device" minOccurs="1" maxOccurs="unbounded">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element type="xsd:string" name="DeviceId" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="AddedReplaced" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="ReplaceReasonId" minOccurs="0" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element name="ComplicationFailure" minOccurs="0" maxOccurs="1">
+                                                                  <xsd:complexType>
+                                                                    <xsd:all>
+                                                                      <xsd:element type="xsd:string" name="ComplicationCode" minOccurs="1" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="ComplicationDate" minOccurs="1" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="ComplicationVerified" minOccurs="0" maxOccurs="1" />
+                                                                      <xsd:element type="xsd:string" name="DateEstimated" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:all>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="Consoles" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="ConcurrentDevice" minOccurs="1" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element name="Device" minOccurs="1" maxOccurs="unbounded">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element type="xsd:string" name="DeviceId" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="AddedReplaced" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="ReplaceReasonId" minOccurs="0" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="StartTime" minOccurs="1" maxOccurs="1" />
+                                                                <xsd:element type="xsd:string" name="EndTime" minOccurs="1" maxOccurs="1" />
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Diagnoses" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="Diagnosis" maxOccurs="unbounded" minOccurs="0">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="DiagnosisCode" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="Primary" minOccurs="1" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Procedures" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="Procedure" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="ProcedureDate" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DateEstimated" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="CPTCode" minOccurs="1" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element type="xsd:string" name="ComplicationsEnabled" minOccurs="1" maxOccurs="1" />
+                                        <xsd:element name="Complications" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="Complication" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="ComplicationDate" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="ComplicationVerified" minOccurs="0" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DateEstimated" minOccurs="0" maxOccurs="1" />
+													<xsd:element type="xsd:string" name="StartTime" minOccurs="0" maxOccurs="1" />
+													<xsd:element type="xsd:string" name="StartTimeEstimated" minOccurs="0" maxOccurs="1" />
+													<xsd:element type="xsd:string" name="EndTime" minOccurs="0" maxOccurs="1" />
+													<xsd:element type="xsd:string" name="EndTimeEstimated" minOccurs="0" maxOccurs="1" />			
+                                                    <xsd:element type="xsd:string" name="ComplicationCode" minOccurs="1" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element type="xsd:string" name="InfectionsEnabled" minOccurs="1" maxOccurs="1" />
+                                        <xsd:element name="Infections" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element name="Infection" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                  <xsd:all>
+                                                    <xsd:element type="xsd:string" name="InfectionDate" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="DateEstimated" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="CultureSite" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="OrganismType" minOccurs="1" maxOccurs="1" />
+                                                    <xsd:element type="xsd:string" name="OrganismId" minOccurs="1" maxOccurs="1" />
+                                                  </xsd:all>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Outcome" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="Discontinuation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Extubated" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="OralEndotrachealTubeRemoval" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CannulaSiteRepair" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ICUDischargeDate" minOccurs="0" maxOccurs="1" />
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Submission" minOccurs="1" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:sequence>
+                                              <xsd:element type="xsd:string" name="CompletedBy" minOccurs="1" maxOccurs="1" />
+											  <xsd:element type="xsd:string" name="RunSubmitted" minOccurs="0" maxOccurs="1"/>
+                                            </xsd:sequence>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="CardiacAddenda" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="NYHACategory" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="RossCategory" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="SCAIcAdmission" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="SCAIcPreECMO" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VasoactiveIntScore" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VISnotRequired" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PreCathYesNo" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="PreECLSCardiacCath" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CardiacCath" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CathOption" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="InterventionOther" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CathDateTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element name="Diagnostics" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Diagnostic" maxOccurs="unbounded" minOccurs="0">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                          <xsd:element name="Interventions" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Intervention" minOccurs="0" maxOccurs="unbounded">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="ECLSCannulation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VADEstimatedUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VADDateImplementation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VADTempSupp" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PrecipitatingEvent" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="Cardiac2022ContributingDiagnoses" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Cardiac2022ContributingDiagnosis" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="AcuteCSUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AcuteCSDateTime" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NonIschemiaC" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="GraftFailure" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="GraftTransplantDateUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="GraftTransplantDate" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="GraftTransplantHours" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="GraftTransplantHoursUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CannulationLocation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="IntensiveCareSetting" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="Cardiac2022LVDecompressions" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Cardiac2022LVDecompression" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="LVDate" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="LVDateUnknown" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="LVDecOther" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="Cardiac2022LVReasons" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Cardiac2022LVReason" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="Cardiac2022Procedures" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="Cardiac2022Procedure" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:all>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="ProcDateTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="EstimatedUnknown" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="SurgeryCPB" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CPBRunsTotal" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CCTime" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CPBTime" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="ICUOpen" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:all>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="DuringCathYesNo" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="DuringECLSCardiacCath" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CardiacCath" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CathOption" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="InterventionOther" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CathDateTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element name="Diagnostics" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Diagnostic" maxOccurs="unbounded" minOccurs="0">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                          <xsd:element name="Interventions" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Intervention" maxOccurs="unbounded" minOccurs="0">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="AfterCathYesNo" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="AfterECLSCardiacCath" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CardiacCath" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CathOption" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="InterventionOther" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="CathDateTime" minOccurs="1" maxOccurs="1" />
+                                                          <xsd:element name="Diagnostics" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Diagnostic" maxOccurs="unbounded" minOccurs="0">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                          <xsd:element name="Interventions" maxOccurs="unbounded" minOccurs="0">
+                                                            <xsd:complexType>
+                                                              <xsd:sequence>
+                                                                <xsd:element name="Intervention" maxOccurs="unbounded" minOccurs="0">
+                                                                  <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                      <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                                    </xsd:sequence>
+                                                                  </xsd:complexType>
+                                                                </xsd:element>
+                                                              </xsd:sequence>
+                                                            </xsd:complexType>
+                                                          </xsd:element>
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="ECPR2020Addenda" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element type="xsd:string" name="PrecipitatingEvent" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="AntecedentEvents">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="AntecedentEvent" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="EventId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="CMconditions">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CMcondition" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="ConditionId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="WitnessedArrest" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ArrestDateTime" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="LAInHospital" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="LAICUDesc" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="LAOutOfHospital" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="OOHCAList" minOccurs="0" maxOccurs="1">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="OOHCA" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="OOHCAId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element name="CompressionMethodsUsed">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CompressionMethod" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="MethodId" minOccurs="0" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="TotalCPRTime" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CMSandardEst" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CMAutoCompEst" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CMOpenChestEst" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CMUnknownEst" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="TimeCprCommenced" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MultipleCPA" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ROSCtimeAfterCPR" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PulseTimeOfCannulation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="CPDuringCPAList">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="CPDuringCPA" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CPAId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="InitialPulselessRhythm" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="DCCardOrDefi" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NumberOfShocks" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="RhythmAtTimeCannulation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="ECPRMedications">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="ECPRMedication" maxOccurs="unbounded" minOccurs="0">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="MedicationId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="EpinephrineNoDoses" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VasopressinNoDoses" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="EndTidalCO2Monitoring" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ETCO2" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="InvasiveArterialAccess" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="DBPflowStart" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CerebralNIRS" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NIRS" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CPRFeedbackDevice" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CPR" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="SignsOfLifePreECLS" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NeuromuscularBlockadeUse" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CDOutOfHospital" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CDInHospital" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="CDICUDesc" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ECPRSystem" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ECPRTypeOfPrime" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="EEGMonitoring" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="IntracranialImaging" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NeurologyNoNeurologicInvestigation" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="TempManagement" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="HighestTemp24Hrs" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="LowestTemp24Hrs" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="BloodGasAvailable" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="VenousGas" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PO2" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="pH" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PCO2" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="HCO3" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="LactateUnknown" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Lactate" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="DebriefPostECPR" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="DebriefPostECPRtf" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="NeurologicalAssessment" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AdPedScore" minOccurs="0" maxOccurs="1" />
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="TraumaAddenda" minOccurs="0" maxOccurs="1">
+                                          <xsd:complexType>
+                                            <xsd:all>
+                                              <xsd:element name="ECLSIndicationTraumaList">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="ECLSIndicationTrauma" minOccurs="0" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="DateOfTrauma" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="DateEstimated" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MechanismBlunt" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MechanismPenetrating" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="MechanismBurns" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="BurnsPercentage" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="TraumaRelatedInjuriesList">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="TraumaRelatedInjury" minOccurs="0" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="1" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="AISHead" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISFace" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISNeck" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISThorax" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISAbdomen" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISSpine" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISUpperExtremity" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISLowerExtremity" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AISExternalOther" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PatientSurgicalProcedure" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element name="SurgInvProceduresList">
+                                                <xsd:complexType>
+                                                  <xsd:sequence>
+                                                    <xsd:element name="SurgInvProcedure" minOccurs="0" maxOccurs="unbounded">
+                                                      <xsd:complexType>
+                                                        <xsd:sequence>
+                                                          <xsd:element type="xsd:string" name="CodeId" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="ProcDate" minOccurs="0" maxOccurs="1" />
+                                                          <xsd:element type="xsd:string" name="DateEstimated" minOccurs="0" maxOccurs="1" />
+                                                        </xsd:sequence>
+                                                      </xsd:complexType>
+                                                    </xsd:element>
+                                                  </xsd:sequence>
+                                                </xsd:complexType>
+                                              </xsd:element>
+                                              <xsd:element type="xsd:string" name="DamageControlSurgery" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Hemoglobin" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ReceivedBP24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PRBC24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PRBCEstimate24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FFP24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FFPEstimate24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Platelets24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PlateletsEstimate24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Cryoprecipitate24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AmicarTXA24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FactorVIIa24" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="ReceivedBP72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PRBC72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PRBCEstimate72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FFP72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FFPEstimate72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Platelets72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="PlateletsEstimate72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Cryoprecipitate72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="AmicarTXA72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="FactorVIIa72" minOccurs="0" maxOccurs="1" />
+                                              <xsd:element type="xsd:string" name="Anticoagulationfree" minOccurs="0" maxOccurs="1" />
+                                            </xsd:all>
+                                          </xsd:complexType>
+                                        </xsd:element>
+                                      </xsd:all>
+                                    </xsd:complexType>
+                                  </xsd:element>
+                                </xsd:sequence>
+                              </xsd:complexType>
+                            </xsd:element>
+                          </xsd:all>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:choice>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

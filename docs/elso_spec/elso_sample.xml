@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PatientList xmlns="urn:run-schema">
+<PatientXML>	
+	<UniqueId>TestPatient123s</UniqueId>
+	<LocalUniqueId>1234abcd</LocalUniqueId>	
+	<Birthdate>06/10/1962</Birthdate>
+	<Sex>1</Sex>
+	<PatientsRaces>
+		<Race>
+			<RaceCode>2</RaceCode>
+		</Race>		
+	</PatientsRaces>
+	<BirthWeight>2.5</BirthWeight>
+    <GestAge>13.5</GestAge>
+    <Apgar1>4</Apgar1>
+    <Apgar5>5</Apgar5>
+    <Delivery>1</Delivery>
+    <MaternalAge>23</MaternalAge>
+	<HospitalizationList>
+		<HospitalizationXML>
+			<AdmitDate>03/11/2019 16:17</AdmitDate>
+			<AdmissionHeight>80</AdmissionHeight>
+		    <AdmissionWeight>97.8</AdmissionWeight>
+			<DischargedAlive>2</DischargedAlive>
+			<DischargeDate>12/13/2019 10:50</DischargeDate>
+			<DischargeLocation>3</DischargeLocation>
+			<Transported>1</Transported>
+			<TransferELSOCenter>1</TransferELSOCenter>
+			<RunList>
+				<RunXML>
+					<RunInfo>
+						<RunNo>1</RunNo>
+						<SupportType>1</SupportType>
+						<WeightUnknown>0</WeightUnknown>	
+						<AdmissionWeight>97.8</AdmissionWeight>
+						<HeightUnknown>0</HeightUnknown>	
+						<AdmissionHeight>80</AdmissionHeight>
+						<Intubation>2</Intubation>
+						<IntubationDate>10/17/2002 10:50</IntubationDate>
+						<InvasiveVentilation>1</InvasiveVentilation>
+						<InvasiveVentilationDT>10/15/2002 12:23</InvasiveVentilationDT>
+						<PreECLSArrest>1</PreECLSArrest>
+						<Transplant>1</Transplant>
+						<Trauma>1</Trauma>
+						<TransferOutAndBackToCenter>1</TransferOutAndBackToCenter>
+						<TransfersOutOfAndBackToCenters>
+							<TransferOutOfAndBackToCenter>
+								<TransferToCenter>1</TransferToCenter>
+								<TransferToELSOCenter>1</TransferToELSOCenter>
+								<StartTime>04/11/2019 13:22</StartTime>
+								<EndTime>04/11/2019 15:29</EndTime>
+							</TransferOutOfAndBackToCenter>						
+						</TransfersOutOfAndBackToCenters>
+					</RunInfo>
+					<PreECLSAssessment>
+						<BloodGas>
+							<BloodGasTime>03/11/2019  07:17</BloodGasTime>
+							<pHUnknown>0</pHUnknown>	
+							<pH>7.20</pH>
+							<PCO2>80.15</PCO2>
+							<PO2>150.23</PO2>
+							<FiO2>12</FiO2>
+							<HCO3Unknown>0</HCO3Unknown>					
+							<HCO3>32.32</HCO3>
+							<SaO2>60</SaO2>
+							<SpO2>70</SpO2>
+							<Lactate>4.3</Lactate>						
+						</BloodGas>				
+						<VentSetting>
+							<VentSettingTime>03/11/2019 07:17</VentSettingTime>
+							<VentilatorType>1</VentilatorType>
+							<HandBagging>0</HandBagging>
+							<Rate>11.55</Rate>
+							<DeltaP>12</DeltaP>					
+							<PIP>8.15</PIP>
+							<PEEP>5.25</PEEP>
+							<MeanAirwayPressure>6.12</MeanAirwayPressure>
+							<HighFrequencyRate>7</HighFrequencyRate>
+						</VentSetting>
+						<Hemodynamic>
+							<HemodynamicTime>03/11/2019 07:17</HemodynamicTime>
+							<SBPUnknown>0</SBPUnknown>
+							<SBP>4</SBP>
+							<DBPUnknown>0</DBPUnknown>
+							<DBP>2</DBP>
+							<MeanBP>3</MeanBP>
+							<SvO2>4</SvO2>
+							<PCWP>5.34</PCWP>
+							<SPAP>6</SPAP>
+							<DPAP>5</DPAP>
+							<MPAP>5</MPAP>
+							<CI>9</CI>
+						</Hemodynamic>
+					</PreECLSAssessment>
+					<PreECLSSupport>				
+						<MechanicalScUsed>1</MechanicalScUsed>
+						<RenPulOtherScUsed>0</RenPulOtherScUsed>
+						<MedicationsScUsed>0</MedicationsScUsed>
+						<VasoactivelScUsed>0</VasoactivelScUsed>
+						<Support>
+							<Code>
+								<CodeId>104</CodeId>
+							</Code>
+							<Code>
+								<CodeId>103</CodeId>
+							</Code>
+						</Support>
+					</PreECLSSupport>
+					<ECLSAssessment>
+						<BloodGas>
+							<BloodGasTime>03/11/2019 22:17</BloodGasTime>
+							<pHUnknown>0</pHUnknown>	
+							<pH>7.51</pH>
+							<PCO2>99.99</PCO2>
+							<PO2>150.23</PO2>
+							<FiO2>13</FiO2>
+							<HCO3Unknown>0</HCO3Unknown>					
+							<HCO3>32.32</HCO3>
+							<SaO2>60</SaO2>
+							<SpO2>70</SpO2>
+							<Lactate>4.6</Lactate>		
+						</BloodGas>	
+						<VentSetting>
+							<VentSettingTime>03/11/2019 22:17</VentSettingTime>
+							<VentilatorType>1</VentilatorType>
+							<HandBagging>0</HandBagging>
+							<Rate>11.55</Rate>
+							<DeltaP>12</DeltaP>					
+							<PIP>8.15</PIP>
+							<PEEP>5.25</PEEP>
+							<MeanAirwayPressure>6.12</MeanAirwayPressure>
+							<HighFrequencyRate>7</HighFrequencyRate>
+						</VentSetting>
+						<Hemodynamic>
+							<HemodynamicTime>03/11/2019 22:17</HemodynamicTime>
+							<SBPUnknown>0</SBPUnknown>
+							<SBP>4</SBP>
+							<DBPUnknown>0</DBPUnknown>
+							<DBP>2</DBP>
+							<MeanBP>3</MeanBP>
+							<SvO2>4</SvO2>
+							<PCWP>5.34</PCWP>
+							<SPAP>6</SPAP>
+							<DPAP>5</DPAP>
+							<MPAP>5</MPAP>
+							<CI>9</CI>			
+						</Hemodynamic>
+						<ECLSCare>
+							<PumpFlow4Unknown>0</PumpFlow4Unknown>
+							<PumpFlow4>1.333</PumpFlow4>
+							<PumpFlow24Unknown>0</PumpFlow24Unknown>
+							<PumpFlow24>1.123</PumpFlow24>
+							<UnitWhereECLSReceived>10</UnitWhereECLSReceived>
+							<OperatingRoom>1</OperatingRoom>
+							<EnteralFeedingTime>03/11/2019 12:00</EnteralFeedingTime>
+							<LevelOfMobilization>7</LevelOfMobilization>
+							<MaxLevelOfMobilization>7</MaxLevelOfMobilization>	
+						</ECLSCare>				
+					</ECLSAssessment>
+					<Modes>
+						<ConcurrentMode>
+							<Mode>
+								<StartTime>03/11/2019 10:00</StartTime>
+								<EndTime>03/11/2019 16:00</EndTime>
+								<ECLSMode>1</ECLSMode>
+							</Mode>			
+							<Mode>
+								<StartTime>03/11/2019 20:00</StartTime>
+								<EndTime>12/13/2019 22:00</EndTime>
+								<ECLSMode>2</ECLSMode>					
+							</Mode>
+						</ConcurrentMode>	
+					</Modes>
+					<Cannulations>
+						<Cannulation>
+							<Percutaneous>1</Percutaneous>
+							<Preexisting>1</Preexisting>
+							<SiteId>2</SiteId>
+							<CannulaId>1015</CannulaId>
+							<AddedReplaced>2</AddedReplaced>
+							<ReplaceReasonId></ReplaceReasonId>
+							<StartTime>04/12/2019 21:30</StartTime>
+							<EndTime>04/13/2019 21:40</EndTime>
+							<CannulationPurposes>
+								<CannulationPurpose>
+									<Purpose>1</Purpose>
+									<StartTime>04/12/2019 21:30</StartTime>
+									<EndTime>04/13/2019 21:31</EndTime>
+								</CannulationPurpose>		
+								<CannulationPurpose>
+									<Purpose>2</Purpose>
+									<StartTime>04/13/2019 21:32</StartTime>
+									<EndTime>04/13/2019 21:33</EndTime>
+								</CannulationPurpose>				
+							</CannulationPurposes>
+						</Cannulation>	
+					</Cannulations>
+					<Equipment>				
+						<HemofilterId>132</HemofilterId>
+						<TemperatureRegulationId>107</TemperatureRegulationId>				
+						<Pumps>
+							<ConcurrentDevice>
+								<Device>
+									<DeviceId>150</DeviceId>
+									<AddedReplaced>1</AddedReplaced>
+									<ReplaceReasonId>4</ReplaceReasonId>
+									<StartTime>03/11/2019 10:00</StartTime>
+									<EndTime>03/11/2019 11:00</EndTime>
+								</Device>
+								<Device>
+									<DeviceId>211</DeviceId>
+									<AddedReplaced>2</AddedReplaced>
+									<ReplaceReasonId></ReplaceReasonId>
+									<StartTime>03/11/2019 12:00</StartTime>
+									<EndTime>03/11/2019 15:00</EndTime>
+								</Device>
+							</ConcurrentDevice>
+							<ConcurrentDevice>
+								<Device>
+									<DeviceId>211</DeviceId>
+									<AddedReplaced>2</AddedReplaced>
+									<ReplaceReasonId></ReplaceReasonId>
+									<StartTime>03/11/2019 15:00</StartTime>
+									<EndTime>12/13/2019 22:00</EndTime>
+								</Device>
+							</ConcurrentDevice>
+						</Pumps>				
+						<MembraneLungs>
+							<ConcurrentDevice>
+								<Device>
+									<DeviceId>220</DeviceId>
+									<AddedReplaced>1</AddedReplaced>
+									<ReplaceReasonId>5</ReplaceReasonId>
+									<StartTime>03/11/2019 10:00</StartTime>
+									<EndTime>03/11/2019 11:00</EndTime>
+								</Device>
+								<Device>
+									<DeviceId>220</DeviceId>
+									<AddedReplaced>2</AddedReplaced>
+									<ReplaceReasonId></ReplaceReasonId>
+									<StartTime>03/11/2019 12:00</StartTime>
+									<EndTime>03/11/2019 15:00</EndTime>
+								</Device>
+							</ConcurrentDevice>
+							
+						</MembraneLungs>
+						
+						<Consoles>
+							<ConcurrentDevice>
+								<Device>
+									<DeviceId>25</DeviceId>
+									<AddedReplaced>1</AddedReplaced>
+									<ReplaceReasonId>5</ReplaceReasonId>
+									<StartTime>03/11/2019 10:00</StartTime>
+									<EndTime>03/11/2019 11:00</EndTime>
+								</Device>
+								<Device>
+									<DeviceId>25</DeviceId>
+									<AddedReplaced>2</AddedReplaced>
+									<ReplaceReasonId></ReplaceReasonId>
+									<StartTime>03/11/2019 12:00</StartTime>
+									<EndTime>03/11/2019 15:00</EndTime>
+								</Device>
+							</ConcurrentDevice>
+							
+						</Consoles>
+						
+					</Equipment>
+					<Diagnoses>
+						<Diagnosis>
+							<DiagnosisCode>A00</DiagnosisCode>
+							<Primary>1</Primary>
+						</Diagnosis>
+						<Diagnosis>
+							<DiagnosisCode>I47.2</DiagnosisCode>
+							<Primary>0</Primary>
+						</Diagnosis>
+					</Diagnoses>
+					<Procedures>
+						<Procedure>
+							<ProcedureDate>05/30/2019</ProcedureDate>
+							<DateEstimated>1</DateEstimated>
+							<CPTCode>32601</CPTCode>
+						</Procedure>
+						<Procedure>
+							<ProcedureDate>05/30/2019</ProcedureDate>
+							<DateEstimated>1</DateEstimated>
+							<CPTCode>32601</CPTCode>
+						</Procedure>
+					</Procedures>
+					<ComplicationsEnabled>1</ComplicationsEnabled>
+					<Complications>
+						<Complication>
+							<ComplicationDate>04/22/2019 09:16</ComplicationDate>
+							<ComplicationVerified>1</ComplicationVerified>
+							<DateEstimated>0</DateEstimated>
+							<ComplicationCode>541</ComplicationCode>
+						</Complication>
+						<Complication>
+							<StartTime>04/22/2019 09:09</StartTime>
+							<StartTimeEstimated>1</StartTimeEstimated>
+							<EndTime>04/22/2019 15:15</EndTime>
+							<EndTimeEstimated>1</EndTimeEstimated>
+							<ComplicationCode>201</ComplicationCode>
+						</Complication>
+					</Complications>
+					<InfectionsEnabled>1</InfectionsEnabled>
+					<Infections>
+						<Infection>
+							<InfectionDate>05/30/2019 10:50</InfectionDate>
+							<DateEstimated>1</DateEstimated>
+							<CultureSite>103</CultureSite>
+							<OrganismType>2</OrganismType>
+							<OrganismId>21</OrganismId>
+						</Infection>
+						<Infection>
+							<InfectionDate>05/30/2019 10:50</InfectionDate>
+							<DateEstimated>1</DateEstimated>
+							<CultureSite>103</CultureSite>
+							<OrganismType>2</OrganismType>
+							<OrganismId>25</OrganismId>
+						</Infection>
+					</Infections>
+					<Outcome>
+						<Discontinuation></Discontinuation>
+						<Extubated>1</Extubated>
+						<OralEndotrachealTubeRemoval>08/11/2019 10:50</OralEndotrachealTubeRemoval>
+						<CannulaSiteRepair>3</CannulaSiteRepair>						
+						<ICUDischargeDate>08/13/2019 10:50</ICUDischargeDate>					
+					</Outcome>
+					<Submission>
+						<CompletedBy>Jupiter</CompletedBy>
+					</Submission>
+					<CardiacAddenda>
+						<NYHACategory>1</NYHACategory> 
+						<!-- <RossCategory>2</RossCategory> -->
+						<SCAIcAdmission>2</SCAIcAdmission>
+						<SCAIcPreECMO>3</SCAIcPreECMO>
+						<VasoactiveIntScore>22</VasoactiveIntScore>
+						<!-- <VISnotRequired>1</VISnotRequired> -->
+						<PreCathYesNo>1</PreCathYesNo>
+						<PreECLSCardiacCath>
+							<CardiacCath>
+								<CathOption>3</CathOption>
+								<InterventionOther>Other test</InterventionOther>
+								<CathDateTime>03/05/2019 10:50</CathDateTime>
+								<Diagnostics>
+									<Diagnostic>
+										<CodeId>3</CodeId>
+									</Diagnostic>
+									<Diagnostic>
+										<CodeId>5</CodeId>
+									</Diagnostic>
+								</Diagnostics>
+								<Interventions>
+									<Intervention>
+										<CodeId>1</CodeId>
+									</Intervention>
+									<Intervention>
+										<CodeId>34</CodeId> 
+									</Intervention>
+								</Interventions>						
+							</CardiacCath>
+						</PreECLSCardiacCath>
+						
+						<ECLSCannulation>4</ECLSCannulation>
+						<VADEstimatedUnknown>1</VADEstimatedUnknown>
+						<VADDateImplementation>05/12/2019 10:50</VADDateImplementation>
+						<VADTempSupp>1</VADTempSupp>
+						
+						<PrecipitatingEvent>6</PrecipitatingEvent>
+						
+						<Cardiac2022ContributingDiagnoses>
+							<Cardiac2022ContributingDiagnosis>
+								<CodeId>4</CodeId>
+							</Cardiac2022ContributingDiagnosis>
+							<Cardiac2022ContributingDiagnosis>
+								<CodeId>14</CodeId>
+							</Cardiac2022ContributingDiagnosis>
+							<Cardiac2022ContributingDiagnosis>
+								<CodeId>16</CodeId>
+							</Cardiac2022ContributingDiagnosis>
+						</Cardiac2022ContributingDiagnoses>
+						
+						<GraftFailure>1</GraftFailure>
+						<GraftTransplantHours></GraftTransplantHours>
+						<GraftTransplantHoursUnknown>1</GraftTransplantHoursUnknown>
+										
+						<AcuteCSUnknown></AcuteCSUnknown> 
+						<AcuteCSDateTime>05/12/2019 10:50</AcuteCSDateTime> 
+						
+						<GraftTransplantDateUnknown></GraftTransplantDateUnknown>
+						<GraftTransplantDate>05/12/2019 10:50</GraftTransplantDate>
+						<NonIschemiaC>17</NonIschemiaC>
+
+						<CannulationLocation>5</CannulationLocation>
+						<IntensiveCareSetting>12</IntensiveCareSetting>
+						
+						<Cardiac2022LVDecompressions>
+							<Cardiac2022LVDecompression>
+								<CodeId>1</CodeId>
+								<LVDate>10/12/2019 10:50</LVDate>
+								<LVDateUnknown></LVDateUnknown>
+							</Cardiac2022LVDecompression>
+							<Cardiac2022LVDecompression>
+								<CodeId>3</CodeId> 
+								<LVDate>10/12/2019 10:50</LVDate>
+								<LVDateUnknown></LVDateUnknown>
+							</Cardiac2022LVDecompression>
+								<Cardiac2022LVDecompression>
+								<CodeId>9</CodeId> 
+								<LVDate>10/12/2019 10:50</LVDate>
+								<LVDateUnknown></LVDateUnknown>
+							</Cardiac2022LVDecompression>
+						</Cardiac2022LVDecompressions>
+						<LVDecOther>TestOther</LVDecOther>					
+						
+						<Cardiac2022LVReasons>
+							<Cardiac2022LVReason>
+								<CodeId>1</CodeId>
+							</Cardiac2022LVReason>
+							<Cardiac2022LVReason>
+								<CodeId>3</CodeId> 
+							</Cardiac2022LVReason>
+						</Cardiac2022LVReasons>
+						
+						
+						<Cardiac2022Procedures>
+							<Cardiac2022Procedure>
+								<CodeId>2100</CodeId>
+								<ProcDateTime>05/12/2019 10:50</ProcDateTime>
+								<EstimatedUnknown>1</EstimatedUnknown>
+								<SurgeryCPB>1</SurgeryCPB>
+								<CPBRunsTotal>1</CPBRunsTotal>
+								<CCTime>1</CCTime>
+								<CPBTime>1</CPBTime>
+								<ICUOpen>1</ICUOpen>
+							</Cardiac2022Procedure>
+
+						</Cardiac2022Procedures>
+
+						<DuringCathYesNo>1</DuringCathYesNo>
+						<DuringECLSCardiacCath>
+							<CardiacCath>
+								<CathOption>3</CathOption>
+								<InterventionOther>Other test</InterventionOther>
+								<CathDateTime>10/12/2019 10:50</CathDateTime>
+								<Diagnostics>
+									<Diagnostic>
+										<CodeId>3</CodeId>
+									</Diagnostic>
+									<Diagnostic>
+										<CodeId>5</CodeId>
+									</Diagnostic>
+								</Diagnostics>
+								<Interventions>
+									<Intervention>
+										<CodeId>1</CodeId>
+									</Intervention>
+									<Intervention>
+										<CodeId>34</CodeId> 
+									</Intervention>
+								</Interventions>						
+							</CardiacCath>
+						</DuringECLSCardiacCath>
+
+						<AfterCathYesNo>1</AfterCathYesNo>
+						<AfterECLSCardiacCath>
+							<CardiacCath>
+								<CathOption>3</CathOption>
+								<InterventionOther>Other test</InterventionOther>
+								<CathDateTime>10/12/2019 10:50</CathDateTime>
+								<Diagnostics>
+									<Diagnostic>
+										<CodeId>3</CodeId>
+									</Diagnostic>
+									<Diagnostic>
+										<CodeId>5</CodeId>
+									</Diagnostic>
+								</Diagnostics>
+								<Interventions>
+									<Intervention>
+										<CodeId>1</CodeId>
+									</Intervention>
+									<Intervention>
+										<CodeId>34</CodeId> 
+									</Intervention>
+								</Interventions>						
+							</CardiacCath>
+						</AfterECLSCardiacCath>
+					</CardiacAddenda>	
+					<ECPR2020Addenda>
+						<PrecipitatingEvent>1</PrecipitatingEvent>
+						
+						<AntecedentEvents>
+							<AntecedentEvent>
+								<EventId>1</EventId>
+							</AntecedentEvent>
+							<AntecedentEvent>
+								<EventId>2</EventId>
+							</AntecedentEvent>
+							<AntecedentEvent>
+								<EventId>3</EventId>
+							</AntecedentEvent>
+						</AntecedentEvents>
+					
+						<CMconditions>
+							<CMcondition>
+								<ConditionId>1</ConditionId>
+							</CMcondition>
+						</CMconditions>		
+
+						<WitnessedArrest>1</WitnessedArrest>
+						<ArrestDateTime>12/13/2019 10:50:00</ArrestDateTime>				
+			
+						<LAOutOfHospital>1</LAOutOfHospital>
+						<OOHCAList>
+							<OOHCA>
+								<OOHCAId>1</OOHCAId>
+							</OOHCA>			
+						</OOHCAList>
+
+						<CompressionMethodsUsed>
+							<CompressionMethod>
+								<MethodId>2</MethodId>
+							</CompressionMethod>	
+							<CompressionMethod>
+								<MethodId>1</MethodId>
+							</CompressionMethod>						
+						</CompressionMethodsUsed>
+						
+						<TotalCPRTime>4</TotalCPRTime>
+						<CMSandardEst>1</CMSandardEst>
+						<CMAutoCompEst>1</CMAutoCompEst>			
+						<CMOpenChestEst>1</CMOpenChestEst>
+						<CMUnknownEst>1</CMUnknownEst>
+						
+						<!-- <TimeCprCommenced>12/13/2019 10:51</TimeCprCommenced> -->
+						<MultipleCPA>1</MultipleCPA>
+						<ROSCtimeAfterCPR>1</ROSCtimeAfterCPR>
+						<PulseTimeOfCannulation>1</PulseTimeOfCannulation>
+
+						<CPDuringCPAList>
+							<CPDuringCPA>
+								<CPAId>1</CPAId>
+							</CPDuringCPA>			
+						</CPDuringCPAList>
+				
+						<InitialPulselessRhythm>1</InitialPulselessRhythm>
+						<DCCardOrDefi>1</DCCardOrDefi>			
+						<NumberOfShocks>1</NumberOfShocks>
+						<RhythmAtTimeCannulation>1</RhythmAtTimeCannulation>
+						
+						<ECPRMedications>
+							<ECPRMedication>
+								<MedicationId>2</MedicationId>
+							</ECPRMedication>		
+							<ECPRMedication>
+								<MedicationId>3</MedicationId>
+							</ECPRMedication>						
+						</ECPRMedications>
+						<EpinephrineNoDoses>1</EpinephrineNoDoses>
+						<VasopressinNoDoses>1</VasopressinNoDoses>
+				
+						<EndTidalCO2Monitoring>1</EndTidalCO2Monitoring>
+						<ETCO2>1</ETCO2>			
+						<InvasiveArterialAccess>1</InvasiveArterialAccess>
+						<DBPflowStart>1</DBPflowStart>
+						<CerebralNIRS>1</CerebralNIRS>
+						<NIRS>1</NIRS>
+						<CPRFeedbackDevice>1</CPRFeedbackDevice>
+						<CPR>25</CPR>			
+						<SignsOfLifePreECLS>0</SignsOfLifePreECLS>
+						<NeuromuscularBlockadeUse>1</NeuromuscularBlockadeUse>
+
+					
+						<CDInHospital>5</CDInHospital>
+						<CDICUDesc>1</CDICUDesc>		     
+						<ECPRSystem>1</ECPRSystem>
+						<ECPRTypeOfPrime>1</ECPRTypeOfPrime>
+						
+						<EEGMonitoring>1</EEGMonitoring>				
+						<IntracranialImaging>1</IntracranialImaging>
+						<NeurologyNoNeurologicInvestigation>1</NeurologyNoNeurologicInvestigation>
+						
+						<TempManagement>1</TempManagement>
+						<HighestTemp24Hrs>2</HighestTemp24Hrs>			
+						<LowestTemp24Hrs>1</LowestTemp24Hrs>
+
+				
+
+						<BloodGasAvailable>1</BloodGasAvailable>
+						<VenousGas>1</VenousGas>
+						<PO2>1</PO2>
+						<pH>7</pH>			
+						<PCO2>31</PCO2>
+						<HCO3>1</HCO3>
+						<LactateUnknown>1</LactateUnknown>
+						<Lactate>1</Lactate>
+						
+						<DebriefPostECPR>1</DebriefPostECPR>
+						<DebriefPostECPRtf>1</DebriefPostECPRtf>
+						
+						<NeurologicalAssessment>1</NeurologicalAssessment>			
+						<AdPedScore>4</AdPedScore>
+					</ECPR2020Addenda>
+					<TraumaAddenda>
+						<ECLSIndicationTraumaList>
+							<ECLSIndicationTrauma>
+								<CodeId>1</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>2</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>3</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>4</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>5</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>6</CodeId>
+							</ECLSIndicationTrauma>
+							<ECLSIndicationTrauma>
+								<CodeId>7</CodeId>
+							</ECLSIndicationTrauma>
+						</ECLSIndicationTraumaList>
+						
+						<DateOfTrauma>04/13/2003 18:20</DateOfTrauma>
+						<DateEstimated>1</DateEstimated>
+						
+						<MechanismBlunt>1</MechanismBlunt>
+						<MechanismPenetrating>1</MechanismPenetrating>
+						<MechanismBurns>1</MechanismBurns>
+						<BurnsPercentage>12</BurnsPercentage>
+						
+						<TraumaRelatedInjuriesList>
+							<TraumaRelatedInjury>
+								<CodeId>1</CodeId>
+							</TraumaRelatedInjury>			
+						</TraumaRelatedInjuriesList>
+										
+						<AISHead>0</AISHead>
+						<AISFace>1</AISFace>
+						<AISNeck>2</AISNeck>
+						<AISThorax>3</AISThorax>
+						<AISAbdomen>4</AISAbdomen>
+						<AISSpine>5</AISSpine>
+						<AISUpperExtremity>2</AISUpperExtremity>
+						<AISLowerExtremity>2</AISLowerExtremity>
+						<AISExternalOther>3</AISExternalOther>
+						
+						<PatientSurgicalProcedure>1</PatientSurgicalProcedure>
+						<SurgInvProceduresList>
+							<SurgInvProcedure>
+								<CodeId>1</CodeId>
+								<ProcDate>04/13/2004 18:20</ProcDate>
+								<DateEstimated>1</DateEstimated>
+							</SurgInvProcedure>			
+						</SurgInvProceduresList>
+						
+						<DamageControlSurgery>1</DamageControlSurgery>
+						
+						<Hemoglobin>5</Hemoglobin>
+						<ReceivedBP24>1</ReceivedBP24>
+						<PRBC24>15000</PRBC24>
+						<PRBCEstimate24>1</PRBCEstimate24>
+						<FFP24>15000</FFP24>
+						<FFPEstimate24>1</FFPEstimate24>
+						<Platelets24>15000</Platelets24>
+						<PlateletsEstimate24>1</PlateletsEstimate24>
+						<Cryoprecipitate24>1</Cryoprecipitate24>
+						<AmicarTXA24>1</AmicarTXA24>
+						<FactorVIIa24>1</FactorVIIa24>
+
+						<ReceivedBP72>1</ReceivedBP72>
+						<PRBC72>15000</PRBC72>
+						<PRBCEstimate72>1</PRBCEstimate72>
+						<FFP72>15000</FFP72>
+						<FFPEstimate72>1</FFPEstimate72>
+						<Platelets72>15000</Platelets72>
+						<PlateletsEstimate72>1</PlateletsEstimate72>
+						<Cryoprecipitate72>1</Cryoprecipitate72>
+						<AmicarTXA72>1</AmicarTXA72>
+						<FactorVIIa72>1</FactorVIIa72>
+									
+						<Anticoagulationfree>1</Anticoagulationfree>
+					</TraumaAddenda>
+				</RunXML>
+			</RunList>
+		</HospitalizationXML>
+	</HospitalizationList>
+	
+</PatientXML>
+
+</PatientList>
