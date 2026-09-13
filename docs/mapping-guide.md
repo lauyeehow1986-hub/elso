@@ -139,3 +139,29 @@ Equipment/Pumps/…/Device←`pumps`(`pump_run`),
 Equipment/MembraneLungs/…/Device←`lungs`(`lung_run`),
 Equipment/Consoles/…/Device←`consoles`(`console_run`),
 CardiacCath←`cath`(`cc_run`, key `cath_id`), nested Diagnostic←`cath_dx`(`dx_cath`).
+
+### Verified against the ELSO public test portal
+The bundled sample + `sample_mapping.json` were uploaded to
+`registry.elso.org/xmlimporttestpublic` and **accepted with zero blocking errors** (only a
+soft BMI review advisory). The portal enforces far more than the XSD; the minimum every run
+needs, learned there:
+
+- **RunInfo:** `AdmissionWeight`, `AdmissionHeight`.
+- **PreECLSAssessment and ECLSAssessment:** `BloodGas/pH`, `BloodGas/HCO3`,
+  `VentSetting/VentilatorType`, `Hemodynamic/SBP`, `Hemodynamic/DBP` (the paired
+  `*Unknown` flags set to `0`).
+- **PreECLSSupport:** `MechanicalScUsed`, `RenPulOtherScUsed`, `MedicationsScUsed`,
+  `VasoactivelScUsed` — set `0` for "none"; setting `1` then requires a support-code sub-list.
+- **Diagnoses:** at least one `Diagnosis` per run, exactly one with `Primary = 1`.
+- **Complications:** point complications (e.g. `541`) use `ComplicationDate`; *duration*
+  complications (e.g. `201`) instead require `StartTime` + `EndTime`.
+- **Hospitalization:** a discharged-alive patient needs `DischargeDate` + `DischargeLocation`.
+- **CardiacAddenda (if present):** `NYHACategory`, `SCAIcAdmission`, `SCAIcPreECMO`,
+  `ECLSCannulation`, `VasoactiveIntScore`, `CannulationLocation` (code `5` = ICU also needs
+  `IntensiveCareSetting`), `PrecipitatingEvent`, `PreCathYesNo`/`DuringCathYesNo`/
+  `AfterCathYesNo`, ≥1 `Cardiac2022ContributingDiagnosis/CodeId` (avoid the graft-failure
+  code unless you also supply graft fields), and the VAD trio `VADEstimatedUnknown` (flag —
+  only `1` is accepted), `VADDateImplementation`, `VADTempSupp`.
+- **CardiacCath:** `CathOption` 1 = diagnostic-only, 2 = intervention-only (Interventions
+  required), 3 = both. A pre-ECLS cath's `CathDateTime` must be **before** the ECLS mode
+  start. Diagnostic code `5` (coronary dilation/stent) must be accompanied by its `3` sub-code.

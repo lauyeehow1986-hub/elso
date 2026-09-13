@@ -26,8 +26,9 @@ patients <- data.frame(
   dob              = c("15/06/1970", "02/11/1985", "23/03/2011"),
   race             = c("1", "4", "2"),         # 1=Asian 4=White 2=Black
   admit_dt         = c("31/01/2024 14:30:45", "05/02/2024 08:12:00", "18/03/2024 22:47:10"),
-  discharge_dt     = c("12/03/2024 09:00:00", "20/02/2024 16:30:00", ""),
-  discharged_alive = c("1", "1", "2"),         # 0=No 1=Yes 2=On ECMO
+  discharge_dt     = c("12/03/2024 09:00:00", "20/02/2024 16:30:00", "25/03/2024 10:00:00"),
+  discharged_alive = c("1", "1", "1"),         # 1=Yes alive (ELSO requires a discharge date + location)
+  discharge_loc    = c("3", "3", "3"),         # DischargeLocation code
   stringsAsFactors = FALSE)
 
 runs <- data.frame(
@@ -38,20 +39,56 @@ runs <- data.frame(
   completed_by = c("YH", "YH", "YH", "team"),
   comp_enabled = c("1", "1", "0", "1"),        # ComplicationsEnabled (1 where a run has complications)
   inf_enabled  = c("0", "0", "0", "0"),        # InfectionsEnabled (no infections in this sample)
+  # --- run-level minimum dataset ELSO's import validator requires (every run) ---
+  adm_wt       = c("70", "80", "80", "40"),    # RunInfo AdmissionWeight (kg)
+  adm_ht       = c("170","175","175","150"),   # RunInfo AdmissionHeight (cm)
+  pre_ph       = c("7.20","7.35","7.11","7.44"), pre_hco3 = c("22","24","20","26"),
+  pre_vent     = c("1","1","1","1"),           # VentilatorType code
+  pre_sbp      = c("90","100","85","95"),  pre_dbp = c("55","60","50","58"),
+  ecls_ph      = c("7.35","7.40","7.30","7.45"), ecls_hco3 = c("24","25","23","26"),
+  ecls_vent    = c("1","1","1","1"),
+  ecls_sbp     = c("100","105","95","100"), ecls_dbp = c("60","65","58","62"),
+  mech_sc      = c("0","0","0","0"), renpul_sc = c("0","0","0","0"),  # 0 = none used (avoids a required support-code sub-list)
+  meds_sc      = c("0","0","0","0"), vaso_sc   = c("0","0","0","0"),
+  # Cardiac-addendum scalars — required by ELSO when a run carries a CardiacAddenda
+  # block. Populated ONLY for the two cath-bearing runs (PT-0001 run1, PT-0002 run1);
+  # blank on the others so their (optional) CardiacAddenda is omitted entirely.
+  nyha         = c("1",  "1",  "", ""),
+  scai_adm     = c("2",  "2",  "", ""),
+  scai_pre     = c("3",  "3",  "", ""),
+  ecls_cann    = c("4",  "4",  "", ""),
+  vaso_score   = c("22", "18", "", ""),
+  cann_loc     = c("5",  "5",  "", ""),
+  icu_set      = c("12", "12", "", ""),        # IntensiveCareSetting (required when cann_loc = ICU)
+  precip_event = c("6",  "6",  "", ""),
+  precath      = c("1",  "1",  "", ""),
+  duringcath   = c("0",  "0",  "", ""),
+  aftercath    = c("0",  "0",  "", ""),
+  vad_est      = c("1",  "1",  "", ""),         # VADEstimatedUnknown (flag; only 1 is valid)
+  vad_date     = c("29/01/2024 08:00:00", "03/02/2024 08:00:00", "", ""),  # VADDateImplementation (before ECMO)
+  vad_temp     = c("1",  "1",  "", ""),         # VADTempSupp
   stringsAsFactors = FALSE)
 
 complications <- data.frame(
   patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0003"),
   comp_run   = c("1", "1", "1"),
-  comp_code  = c("541", "201", "541"),
+  comp_code  = c("541", "541", "541"),   # 541 is a point complication (uses ComplicationDate)
   comp_dt    = c("04/02/2024 09:16:00", "07/02/2024 03:00:00", "19/03/2024 06:00:00"),
   stringsAsFactors = FALSE)
 
+# Cardiac contributing diagnoses (a list inside CardiacAddenda) — >=1 required when
+# CardiacAddenda is present. Linked to the run via cdx_run.
+cardiac_dx <- data.frame(
+  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002"),
+  cdx_run    = c("1", "1"),
+  cdx_code   = c("4", "4"),               # code 4 avoids graft-failure sub-requirements
+  stringsAsFactors = FALSE)
+
 diagnoses <- data.frame(
-  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
-  dx_run     = c("1", "1", "2"),
-  dx_code    = c("A00", "I47.2", "J80"),
-  dx_primary = c("1", "1", "0"),
+  patient_id = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002", "ECMO-PT-0003"),
+  dx_run     = c("1", "1", "2", "1"),
+  dx_code    = c("A00", "I47.2", "J80", "J80"),
+  dx_primary = c("1", "1", "1", "1"),          # every run needs a primary diagnosis
   stringsAsFactors = FALSE)
 
 # Cardiac addenda — pre-ECLS cardiac catheterisations (repeat inside a run).
@@ -61,16 +98,16 @@ caths <- data.frame(
   patient_id  = c("ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
   cc_run      = c("1", "1", "1"),
   cath_id     = c("CATH-1A", "CATH-2A", "CATH-2B"),
-  cath_option = c("1", "1", "2"),
-  cath_dt     = c("30/01/2024 10:00:00", "04/02/2024 20:05:00", "06/02/2024 11:30:00"),
+  cath_option = c("1", "1", "1"),   # 1 = diagnostic-only cath (Diagnostics allowed, no Interventions required)
+  cath_dt     = c("30/01/2024 10:00:00", "04/02/2024 08:00:00", "04/02/2024 09:00:00"),  # pre-ECLS: before mode start
   stringsAsFactors = FALSE)
 
 # Nested diagnostics — each row is one finding inside a specific cath (list in a
 # list). dx_cath links to cath_id. CATH-1A carries two diagnostics.
 cath_dx <- data.frame(
-  patient_id   = c("ECMO-PT-0001", "ECMO-PT-0001", "ECMO-PT-0002", "ECMO-PT-0002"),
-  dx_cath      = c("CATH-1A", "CATH-1A", "CATH-2A", "CATH-2B"),
-  cath_dx_code = c("3", "5", "3", "5"),   # ELSO CardiacCath diagnostic CodeIds
+  patient_id   = c("ECMO-PT-0001","ECMO-PT-0001","ECMO-PT-0002","ECMO-PT-0002","ECMO-PT-0002","ECMO-PT-0002"),
+  dx_cath      = c("CATH-1A","CATH-1A","CATH-2A","CATH-2A","CATH-2B","CATH-2B"),
+  cath_dx_code = c("3","5","3","5","3","5"),  # 3+5 together (5 = coronary dilation/stent needs its 3 sub-code)
   stringsAsFactors = FALSE)
 
 # ---- run-level required collections (ELSO import mandates these per run) -----
@@ -166,6 +203,33 @@ dd <- rbind(dd, data.frame(
   type     = c("text","text","text","text","text"),
   choices  = c("","","","",""),
   stringsAsFactors = FALSE))
+dd <- rbind(dd, data.frame(
+  variable = c("nyha","scai_adm","scai_pre","ecls_cann","vaso_score","cann_loc",
+               "precip_event","precath","duringcath","aftercath","cdx_run","cdx_code"),
+  form_name= c(rep("run",10), "cardiac_dx","cardiac_dx"),
+  label    = c("NYHA category","SCAI at admission","SCAI pre-ECMO","ECLS cannulation",
+               "Vasoactive inotrope score","Cannulation location","Precipitating event",
+               "Pre-cath yes/no","During-cath yes/no","After-cath yes/no",
+               "Cardiac dx run","Cardiac contributing diagnosis code"),
+  type     = c(rep("text",12)),
+  choices  = c(rep("",12)),
+  stringsAsFactors = FALSE))
+dd <- rbind(dd, data.frame(
+  variable = c("discharge_loc",
+               "adm_wt","adm_ht","pre_ph","pre_hco3","pre_vent","pre_sbp","pre_dbp",
+               "ecls_ph","ecls_hco3","ecls_vent","ecls_sbp","ecls_dbp",
+               "mech_sc","renpul_sc","meds_sc","vaso_sc",
+               "icu_set","vad_est","vad_date","vad_temp"),
+  form_name= c("demographics", rep("run",20)),
+  label    = c("Discharge location",
+               "Admission weight","Admission height","Pre pH","Pre HCO3","Pre vent type",
+               "Pre SBP","Pre DBP","ECLS pH","ECLS HCO3","ECLS vent type","ECLS SBP","ECLS DBP",
+               "Mechanical support used","Renal/pulm/other support used","Medications support used",
+               "Vasoactive support used","Intensive care setting","VAD estimated unknown",
+               "VAD date of implantation","VAD temporary support"),
+  type     = c(rep("text",19), "datetime_seconds_dmy", "text"),
+  choices  = c(rep("",21)),
+  stringsAsFactors = FALSE))
 write.csv(dd, file.path(outdir, "sample_redcap_dictionary.csv"), row.names = FALSE)
 
 ## ---- flat records CSV (REDCap-style long export) ---------------------------
@@ -192,7 +256,8 @@ flat <- rbind(bind_form(patients, "demographics"),
               bind_form(modes, "mode"),
               bind_form(pumps, "pumps"),
               bind_form(lungs, "lungs"),
-              bind_form(consoles, "consoles"))
+              bind_form(consoles, "consoles"),
+              bind_form(cardiac_dx, "cardiac_dx"))
 write.csv(flat, file.path(outdir, "sample_redcap_records.csv"), row.names = FALSE)
 
 ## ---- REDCap ODM XML --------------------------------------------------------
@@ -215,7 +280,7 @@ for (v in names(choice_map)) {
   cl_defs <- c(cl_defs, sprintf('<CodeList OID="cl_%s" Name="%s" DataType="text">%s</CodeList>', v, v, items))
 }
 forms <- c("demographics","run","complication","diagnosis","cath","cath_dx",
-           "mode","pumps","lungs","consoles")
+           "mode","pumps","lungs","consoles","cardiac_dx")
 form_defs <- character(0); ig_defs <- character(0)
 for (f in forms) {
   vars <- dd$variable[dd$form_name == f]
@@ -257,6 +322,8 @@ for (pid in patients$patient_id) {
   for (k in seq_along(ll)) blocks <- paste0(blocks, form_block(lungs, ll[k], "lungs", k))
   nn <- which(consoles$patient_id == pid)
   for (k in seq_along(nn)) blocks <- paste0(blocks, form_block(consoles, nn[k], "consoles", k))
+  cd <- which(cardiac_dx$patient_id == pid)
+  for (k in seq_along(cd)) blocks <- paste0(blocks, form_block(cardiac_dx, cd[k], "cardiac_dx", k))
   subj_blocks <- c(subj_blocks, sprintf(
     '<SubjectData SubjectKey="%s"><StudyEventData StudyEventOID="ev.baseline">%s</StudyEventData></SubjectData>',
     pid, blocks))

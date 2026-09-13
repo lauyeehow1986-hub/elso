@@ -44,6 +44,11 @@
         "form": "cath_dx",
         "link_field": "dx_cath",
         "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/Cardiac2022ContributingDiagnoses/Cardiac2022ContributingDiagnosis": {
+        "form": "cardiac_dx",
+        "link_field": "cdx_run",
+        "key_field": ""
       }
     }
   },
@@ -149,6 +154,132 @@
     },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/Diagnostics/Diagnostic/CodeId": {
       "source": "cath_dx_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/NYHACategory": {
+      "source": "nyha"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/SCAIcAdmission": {
+      "source": "scai_adm"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/SCAIcPreECMO": {
+      "source": "scai_pre"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/ECLSCannulation": {
+      "source": "ecls_cann"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VasoactiveIntScore": {
+      "source": "vaso_score"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/CannulationLocation": {
+      "source": "cann_loc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PrecipitatingEvent": {
+      "source": "precip_event"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreCathYesNo": {
+      "source": "precath"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/DuringCathYesNo": {
+      "source": "duringcath"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/AfterCathYesNo": {
+      "source": "aftercath"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/Cardiac2022ContributingDiagnoses/Cardiac2022ContributingDiagnosis/CodeId": {
+      "source": "cdx_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/DischargeLocation": {
+      "source": "discharge_loc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/AdmissionWeight": {
+      "source": "adm_wt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/AdmissionHeight": {
+      "source": "adm_ht"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/BloodGas/pH": {
+      "source": "pre_ph"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/BloodGas/HCO3": {
+      "source": "pre_hco3"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/VentSetting/VentilatorType": {
+      "source": "pre_vent"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/Hemodynamic/SBP": {
+      "source": "pre_sbp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/Hemodynamic/DBP": {
+      "source": "pre_dbp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/BloodGas/pH": {
+      "source": "ecls_ph"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/BloodGas/HCO3": {
+      "source": "ecls_hco3"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/VentSetting/VentilatorType": {
+      "source": "ecls_vent"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/Hemodynamic/SBP": {
+      "source": "ecls_sbp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/Hemodynamic/DBP": {
+      "source": "ecls_dbp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSSupport/MechanicalScUsed": {
+      "source": "mech_sc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSSupport/RenPulOtherScUsed": {
+      "source": "renpul_sc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSSupport/MedicationsScUsed": {
+      "source": "meds_sc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSSupport/VasoactivelScUsed": {
+      "source": "vaso_sc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/IntensiveCareSetting": {
+      "source": "icu_set"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADEstimatedUnknown": {
+      "source": "vad_est"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADDateImplementation": {
+      "source": "vad_date"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADTempSupp": {
+      "source": "vad_temp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/WeightUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/HeightUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/BloodGas/pHUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/BloodGas/HCO3Unknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/Hemodynamic/SBPUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/PreECLSAssessment/Hemodynamic/DBPUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/BloodGas/pHUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/BloodGas/HCO3Unknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/Hemodynamic/SBPUnknown": {
+      "const": "0"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECLSAssessment/Hemodynamic/DBPUnknown": {
+      "const": "0"
     }
   },
   "recode": {
@@ -207,6 +338,10 @@
       "target": "datetime"
     },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/PreECLSCardiacCath/CardiacCath/CathDateTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADDateImplementation": {
       "input": "auto",
       "target": "datetime"
     }

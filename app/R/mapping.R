@@ -58,8 +58,9 @@ el_auto_recode <- function(cat, parsed, map) {
   for (path in names(map)) {
     li <- match(path, lv$path); if (is.na(li)) next
     if (!isTRUE(lv$has_codes[li])) next
-    elso_cl <- el_codelist(cat, lv[li, ])
     src <- map[[path]]$source
+    if (el_blank(src)) next                 # const-only mapping: nothing to recode
+    elso_cl <- el_codelist(cat, lv[li, ])
     rc_cl <- parsed$choices[[src]]
     if (is.null(elso_cl) || is.null(rc_cl)) next
     key <- setNames(elso_cl$code, el_norm(elso_cl$label))
