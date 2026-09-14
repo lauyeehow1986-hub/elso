@@ -49,6 +49,16 @@
         "form": "cardiac_dx",
         "link_field": "cdx_run",
         "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/ECLSIndicationTraumaList/ECLSIndicationTrauma": {
+        "form": "trauma_ind",
+        "link_field": "tind_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/TraumaRelatedInjuriesList/TraumaRelatedInjury": {
+        "form": "trauma_inj",
+        "link_field": "tinj_run",
+        "key_field": ""
       }
     }
   },
@@ -251,6 +261,39 @@
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADTempSupp": {
       "source": "vad_temp"
     },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/PrecipitatingEvent": {
+      "source": "ecpr_precip"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/WitnessedArrest": {
+      "source": "ecpr_witnessed"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/ArrestDateTime": {
+      "source": "ecpr_arrest_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CPR": {
+      "source": "ecpr_cpr"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/InitialPulselessRhythm": {
+      "source": "ecpr_rhythm"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/DateOfTrauma": {
+      "source": "trauma_dt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/MechanismBlunt": {
+      "source": "trauma_blunt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/MechanismPenetrating": {
+      "source": "trauma_pen"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/MechanismBurns": {
+      "source": "trauma_burns"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/ECLSIndicationTraumaList/ECLSIndicationTrauma/CodeId": {
+      "source": "tind_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/TraumaRelatedInjuriesList/TraumaRelatedInjury/CodeId": {
+      "source": "tinj_code"
+    },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/WeightUnknown": {
       "const": "0"
     },
@@ -342,6 +385,14 @@
       "target": "datetime"
     },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/CardiacAddenda/VADDateImplementation": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/ArrestDateTime": {
+      "input": "auto",
+      "target": "datetime"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/DateOfTrauma": {
       "input": "auto",
       "target": "datetime"
     }

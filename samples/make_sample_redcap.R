@@ -67,6 +67,19 @@ runs <- data.frame(
   vad_est      = c("1",  "1",  "", ""),         # VADEstimatedUnknown (flag; only 1 is valid)
   vad_date     = c("29/01/2024 08:00:00", "03/02/2024 08:00:00", "", ""),  # VADDateImplementation (before ECMO)
   vad_temp     = c("1",  "1",  "", ""),         # VADTempSupp
+  # ECPR-2020 addendum scalars — populated ONLY for PT-0002 run 2 (a non-cardiac
+  # run) so ecpr-including profiles differ; blank elsewhere -> that optional
+  # ECPR2020Addenda block is omitted for the other runs.
+  ecpr_precip    = c("", "", "6", ""),                    # ECPR PrecipitatingEvent
+  ecpr_witnessed = c("", "", "1", ""),                    # WitnessedArrest (Yes)
+  ecpr_arrest_dt = c("", "", "10/02/2024 07:00:00", ""),  # ArrestDateTime (before run-2 mode start)
+  ecpr_cpr       = c("", "", "1", ""),                    # CPR performed
+  ecpr_rhythm    = c("", "", "1", ""),                    # InitialPulselessRhythm
+  # Trauma addendum scalars — populated ONLY for PT-0003 run 1.
+  trauma_dt      = c("", "", "", "18/03/2024 20:00:00"),  # DateOfTrauma (before mode start)
+  trauma_blunt   = c("", "", "", "1"),                    # MechanismBlunt
+  trauma_pen     = c("", "", "", "0"),                    # MechanismPenetrating
+  trauma_burns   = c("", "", "", "0"),                    # MechanismBurns
   stringsAsFactors = FALSE)
 
 complications <- data.frame(
@@ -154,6 +167,18 @@ consoles <- data.frame(
                     "14/02/2024 08:00:00", "22/03/2024 02:00:00"),
   stringsAsFactors = FALSE)
 
+# Trauma addenda nested lists (attach to PT-0003 run 1 via *_run -> run_no).
+# ECLSIndicationTrauma and TraumaRelatedInjury are run-level lists inside
+# TraumaAddenda; one row each here.
+trauma_ind <- data.frame(
+  patient_id = "ECMO-PT-0003", tind_run = "1",
+  tind_code  = "1",            # ECLSIndicationTrauma/CodeId
+  stringsAsFactors = FALSE)
+trauma_inj <- data.frame(
+  patient_id = "ECMO-PT-0003", tinj_run = "1",
+  tinj_code  = "1",            # TraumaRelatedInjury/CodeId
+  stringsAsFactors = FALSE)
+
 ## ---- data dictionary + choices ---------------------------------------------
 codelists <- list(
   sex   = c("0"="Unknown","1"="Male","2"="Female"),
@@ -230,6 +255,21 @@ dd <- rbind(dd, data.frame(
   type     = c(rep("text",19), "datetime_seconds_dmy", "text"),
   choices  = c(rep("",21)),
   stringsAsFactors = FALSE))
+dd <- rbind(dd, data.frame(
+  variable = c("ecpr_precip","ecpr_witnessed","ecpr_arrest_dt","ecpr_cpr","ecpr_rhythm",
+               "trauma_dt","trauma_blunt","trauma_pen","trauma_burns",
+               "tind_run","tind_code","tinj_run","tinj_code"),
+  form_name= c(rep("run",9), "trauma_ind","trauma_ind","trauma_inj","trauma_inj"),
+  label    = c("ECPR precipitating event","ECPR witnessed arrest","ECPR arrest date/time",
+               "ECPR CPR performed","ECPR initial pulseless rhythm",
+               "Date of trauma","Mechanism blunt","Mechanism penetrating","Mechanism burns",
+               "Trauma indication run","ECLS indication (trauma) code",
+               "Trauma injury run","Trauma related injury code"),
+  type     = c("text","text","datetime_seconds_dmy","text","text",
+               "datetime_seconds_dmy","text","text","text",
+               "text","text","text","text"),
+  choices  = c(rep("",13)),
+  stringsAsFactors = FALSE))
 write.csv(dd, file.path(outdir, "sample_redcap_dictionary.csv"), row.names = FALSE)
 
 ## ---- flat records CSV (REDCap-style long export) ---------------------------
@@ -257,7 +297,9 @@ flat <- rbind(bind_form(patients, "demographics"),
               bind_form(pumps, "pumps"),
               bind_form(lungs, "lungs"),
               bind_form(consoles, "consoles"),
-              bind_form(cardiac_dx, "cardiac_dx"))
+              bind_form(cardiac_dx, "cardiac_dx"),
+              bind_form(trauma_ind, "trauma_ind"),
+              bind_form(trauma_inj, "trauma_inj"))
 write.csv(flat, file.path(outdir, "sample_redcap_records.csv"), row.names = FALSE)
 
 ## ---- REDCap ODM XML --------------------------------------------------------
@@ -280,7 +322,7 @@ for (v in names(choice_map)) {
   cl_defs <- c(cl_defs, sprintf('<CodeList OID="cl_%s" Name="%s" DataType="text">%s</CodeList>', v, v, items))
 }
 forms <- c("demographics","run","complication","diagnosis","cath","cath_dx",
-           "mode","pumps","lungs","consoles","cardiac_dx")
+           "mode","pumps","lungs","consoles","cardiac_dx","trauma_ind","trauma_inj")
 form_defs <- character(0); ig_defs <- character(0)
 for (f in forms) {
   vars <- dd$variable[dd$form_name == f]
@@ -324,6 +366,10 @@ for (pid in patients$patient_id) {
   for (k in seq_along(nn)) blocks <- paste0(blocks, form_block(consoles, nn[k], "consoles", k))
   cd <- which(cardiac_dx$patient_id == pid)
   for (k in seq_along(cd)) blocks <- paste0(blocks, form_block(cardiac_dx, cd[k], "cardiac_dx", k))
+  ti <- which(trauma_ind$patient_id == pid)
+  for (k in seq_along(ti)) blocks <- paste0(blocks, form_block(trauma_ind, ti[k], "trauma_ind", k))
+  tj <- which(trauma_inj$patient_id == pid)
+  for (k in seq_along(tj)) blocks <- paste0(blocks, form_block(trauma_inj, tj[k], "trauma_inj", k))
   subj_blocks <- c(subj_blocks, sprintf(
     '<SubjectData SubjectKey="%s"><StudyEventData StudyEventOID="ev.baseline">%s</StudyEventData></SubjectData>',
     pid, blocks))
@@ -345,3 +391,6 @@ cat("Wrote samples/sample_redcap.odm.xml,",
 cat("Patients: 3 (PT-0002 has 2 runs); complications & diagnoses link via *_run.\n")
 cat("Cardiac addenda: caths link to runs via cc_run; nested cath_dx link via",
     "dx_cath -> cath_id (PT-0002 run 1 has 2 caths; CATH-1A has 2 diagnostics).\n")
+cat("ECPR-2020 addenda: run-level scalars on PT-0002 run 2.",
+    "Trauma addenda: run-level scalars on PT-0003 run 1 + nested ECLSIndicationTrauma",
+    "(trauma_ind) and TraumaRelatedInjury (trauma_inj).\n")
