@@ -342,7 +342,7 @@ server <- function(input, output, session) {
     rv$binding <- build_binding()
     hier <- el_build_hierarchy(parsed, rv$binding)
     doc <- el_generate_xml(CAT, hier, rv$map, rv$recode, rv$datefmt)
-    el_apply_addenda_profile(doc, input$addenda_incl %||% names(el_addenda_tokens()))
+    el_apply_addenda_profile(doc, input$addenda_incl)
   }
 
   # ---- validate ----
