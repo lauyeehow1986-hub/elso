@@ -46,14 +46,18 @@ el_project_save <- function(dir, cfg) {
 
 el_sha256_file <- function(path) {
   if (!file.exists(path)) return(NA_character_)
-  as.character(openssl::sha256(file(path)))
+  # paste0 strips the openssl "hash"/"sha256" S3 class so the hex digest is a
+  # plain character jsonlite can serialize (as.character alone keeps the class)
+  paste0(as.character(openssl::sha256(file(path))))
 }
 
 el_manifest_write <- function(dir) {
   files <- list.files(dir, recursive = TRUE, full.names = TRUE)
   files <- files[basename(files) != "manifest.json"]
   entries <- lapply(files, function(f) list(
-    file = sub(paste0("^", gsub("([.\\\\+*?\\[^\\]$(){}=!<>|:#-])", "\\\\\\1", dir), "/?"), "", f),
+    # strip the "<dir>/" prefix without regex (fixed=TRUE) — the previous
+    # escaped-regex approach built an invalid pattern that errored under TRE
+    file = sub(paste0(dir, "/"), "", f, fixed = TRUE),
     sha256 = el_sha256_file(f),
     bytes = file.info(f)$size))
   mp <- file.path(dir, "outputs", "manifest.json")

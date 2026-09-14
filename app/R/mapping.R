@@ -91,5 +91,11 @@ el_save_mapping <- function(template, path) {
   path
 }
 el_load_mapping <- function(path) {
-  jsonlite::fromJSON(path, simplifyVector = FALSE)
+  t <- jsonlite::fromJSON(path, simplifyVector = FALSE)
+  # recode values must be named character vectors (redcapCode -> elsoCode) per the
+  # generator's contract; fromJSON(simplifyVector=FALSE) yields lists, which would
+  # make el_resolve_leaf feed a list to xml_text<-. Coerce them back to vectors.
+  if (!is.null(t$recode) && length(t$recode))
+    t$recode <- lapply(t$recode, function(v) unlist(v, use.names = TRUE))
+  t
 }
