@@ -129,6 +129,13 @@ ui <- page_navbar(
           "The main ELSO form is always included."),
       div(actionButton("btn_generate", "Generate", class = "btn-primary"),
           downloadButton("dl_xml", "Download .xml")),
+      hr(),
+      div(actionButton("btn_generate_all", "Generate all 8 combinations",
+                       class = "btn-outline-primary"),
+          span(class = "small text-muted ms-2",
+               "Writes 8 files to <project>/outputs/combinations/. ",
+               "Synthetic data — ELSO test portal only.")),
+      DTOutput("combo_tbl"),
       textOutput("gen_info"),
       tags$pre(style = "max-height:480px; overflow:auto;", textOutput("xml_preview"))))
 )
@@ -379,6 +386,43 @@ server <- function(input, output, session) {
                     list(xsd_valid = rv$xsd$ok, output = basename(out)))
     }
     showNotification("XML generated.", type = "message")
+  })
+
+  rv_combo <- reactiveVal(NULL)
+  observeEvent(input$btn_generate_all, {
+    proj_dir <- rv$proj$dir %||% input$proj_dir
+    if (is.null(rv$proj) || el_blank(proj_dir)) {
+      showNotification("Open or create a project first (files are written to its outputs folder).",
+                       type = "error"); return(invisible())
+    }
+    req(rv$parsed)
+    parsed <- rv$parsed
+    if (isTRUE(input$deid_on))
+      parsed$records <- el_apply_deident(parsed$records, list(
+        secret = input$deid_secret, id_cols = input$deid_ids, date_cols = input$deid_dates,
+        max_shift_days = input$deid_shift, patient_key = input$patient_key %||% ".subject"))
+    rv$binding <- build_binding()
+    hier <- el_build_hierarchy(parsed, rv$binding)
+    out_dir <- file.path(el_project_paths(proj_dir)$outputs, "combinations")
+    res <- tryCatch(
+      el_generate_all_combinations(CAT, hier, rv$map, rv$recode, rv$datefmt,
+                                   out_dir = out_dir, xsd_path = getOption("el.xsd_path")),
+      error = function(e) { showNotification(conditionMessage(e), type = "error"); NULL })
+    req(res)
+    rv_combo(res)
+    el_manifest_write(proj_dir)
+    el_log_append(proj_dir, "generate_all",
+                  list(n = nrow(res), n_xsd_ok = sum(res$xsd_valid),
+                       n_clean = sum(res$xsd_valid & res$n_error == 0, na.rm = TRUE)))
+    showNotification(sprintf("Wrote %d combination files to %s", nrow(res), out_dir),
+                     type = "message")
+  })
+  output$combo_tbl <- renderDT({
+    res <- rv_combo(); if (is.null(res)) return(NULL)
+    datatable(res, rownames = FALSE, options = list(dom = "t", pageLength = 8)) |>
+      formatStyle("xsd_valid", target = "row",
+                  backgroundColor = styleEqual(c(TRUE, FALSE), c("#d1e7dd", "#f8d7da"))) |>
+      formatStyle("n_error", color = styleInterval(0, c("inherit", "#b02a37")))
   })
   output$gen_info <- renderText({
     if (is.null(rv$doc)) return("Not generated yet.")
