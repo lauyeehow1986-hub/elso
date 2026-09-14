@@ -80,6 +80,23 @@ within a patient are preserved). The controller confirms adequacy before release
 - **Generate XML** builds the file, validates it, previews it, and (with a project open)
   writes it to `outputs/elso_import.xml` with a SHA-256 manifest and a log entry.
 
+### Addenda upload profiles (Generate tab)
+The main ELSO form is always emitted; the three addenda (Cardiac, ECPR 2020, Trauma) are
+optional. Two controls let you choose which addenda a given upload carries:
+
+- **Include addenda** checkboxes — tick the addenda to keep in the single **Generate XML**
+  output. Any `*Addenda` block not ticked is pruned from the generated file after the build.
+  Unticking all three yields a **main-only** file. This is a post-generation DOM prune, so it
+  never changes the mapped data — the same field map produces every profile.
+- **Generate all 8 combinations** button — writes all `2³` combinations at once
+  (`main`; each addendum alone; each pair; all three) to
+  `outputs/combinations/elso_import__<profile>.xml`, and shows a results table with per-file
+  XSD validity and semantic-error counts. Use this to hand a center a full set of uploads, or
+  to submit only the profiles a given run actually has.
+
+Because the addenda attach to independent runs/patients, pruning one never affects another:
+if the all-addenda file is portal-clean, every subset is too.
+
 ## Worked example (bundled sample)
 1. Import → *Load bundled synthetic sample* (3 patients; PT-0002 has 2 runs).
 2. Map → *Auto-suggest mapping*.
@@ -138,13 +155,20 @@ Modes/ConcurrentMode/Mode←`mode`(`mode_run`),
 Equipment/Pumps/…/Device←`pumps`(`pump_run`),
 Equipment/MembraneLungs/…/Device←`lungs`(`lung_run`),
 Equipment/Consoles/…/Device←`consoles`(`console_run`),
-CardiacCath←`cath`(`cc_run`, key `cath_id`), nested Diagnostic←`cath_dx`(`dx_cath`).
+CardiacCath←`cath`(`cc_run`, key `cath_id`), nested Diagnostic←`cath_dx`(`dx_cath`),
+Cardiac2022ContributingDiagnosis←`cardiac_dx`(`cdx_run`),
+TraumaAddenda ECLSIndicationTrauma←`trauma_ind`(`tind_run`),
+TraumaRelatedInjury←`trauma_inj`(`tinj_run`),
+ECPR2020Addenda AntecedentEvent←`ecpr_ante`(`ea_run`), CMcondition←`ecpr_cmc`(`ec_run`),
+ECPRMedication←`ecpr_med`(`em_run`). (All of the above are already wired in
+`sample_mapping.json`; **Load template** applies them in one step.)
 
 ### Verified against the ELSO public test portal
 The bundled sample + `sample_mapping.json` were uploaded to
-`registry.elso.org/xmlimporttestpublic` and **accepted with zero blocking errors** (only a
-soft BMI review advisory). The portal enforces far more than the XSD; the minimum every run
-needs, learned there:
+`registry.elso.org/xmlimporttestpublic` and **accepted with zero errors and zero warnings**.
+All **eight** addenda combinations (main only; +Cardiac; +ECPR; +Trauma; and every mix up to
+Cardiac+ECPR+Trauma) were each uploaded and cleared. The portal enforces far more than the
+XSD; the minimum every run needs, learned there:
 
 - **RunInfo:** `AdmissionWeight`, `AdmissionHeight`.
 - **PreECLSAssessment and ECLSAssessment:** `BloodGas/pH`, `BloodGas/HCO3`,
@@ -165,3 +189,30 @@ needs, learned there:
 - **CardiacCath:** `CathOption` 1 = diagnostic-only, 2 = intervention-only (Interventions
   required), 3 = both. A pre-ECLS cath's `CathDateTime` must be **before** the ECLS mode
   start. Diagnostic code `5` (coronary dilation/stent) must be accompanied by its `3` sub-code.
+- **ECPR2020Addenda (if present):** the portal requires a large, interlocking set once the
+  block appears. Scalars: `PrecipitatingEvent` (its code list differs from CardiacAddenda's —
+  `6` is valid for Cardiac but **not** ECPR; use an ECPR code such as `1`), `WitnessedArrest`,
+  `ArrestDateTime`, `InitialPulselessRhythm`, `RhythmAtTimeCannulation`, `CPRFeedbackDevice`
+  (must be `1` for `CPR` to be accepted), `CPR` (minutes, hard range 20–200 / soft 40–160),
+  `SignsOfLifePreECLS`, `NeuromuscularBlockadeUse`, and a neurology selection
+  (`NeurologyNoNeurologicInvestigation`). **Location of arrest** has two questions — set an
+  in-hospital *or* out-of-hospital option for each; the `*ICUDesc` specify field is valid only
+  when the chosen location option is the ICU one (e.g. `LAInHospital = 5` alongside `LAICUDesc`).
+  Monitoring answers pull in a value: `EndTidalCO2Monitoring = 1` requires `ETCO2`;
+  `InvasiveArterialAccess = 1` requires `DBPflowStart` (soft range 5–110); `CerebralNIRS = 1`
+  requires `NIRS`; `TempManagement = 1` requires `HighestTemp24Hrs`. Lists needing ≥1 entry:
+  `AntecedentEvents/AntecedentEvent/EventId`, `CMconditions/CMcondition/ConditionId`,
+  `ECPRMedications/ECPRMedication/MedicationId`.
+- **TraumaAddenda (if present):** all nine AIS body-region rates are required, each `0`–`6`
+  (`AISHead`, `AISFace`, `AISNeck`, `AISThorax`, `AISAbdomen`, `AISSpine`, `AISUpperExtremity`,
+  `AISLowerExtremity`, `AISExternalOther`), plus `PatientSurgicalProcedure`,
+  `DamageControlSurgery`, `ReceivedBP24`, `ReceivedBP72`. The option code lists are **not
+  uniform**: `DamageControlSurgery` rejects `0` (use `1` = Yes), whereas
+  `PatientSurgicalProcedure`/`ReceivedBP24`/`ReceivedBP72` accept `0` = No. Choosing `0`/No on
+  the surgical-procedure and blood-product questions avoids their nested sub-lists
+  (`SurgInvProcedure`, PRBC/FFP/platelet quantities).
+
+> Addenda code lists are **not** in the bundled lookups workbook (only the main-form
+> collections are), so they are not caught by the offline validator — they are enforced only
+> by the portal. The known-good values above were confirmed empirically against the test
+> portal and mirror ELSO's own `docs/elso_spec/elso_sample.xml`.

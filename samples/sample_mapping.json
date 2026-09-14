@@ -59,6 +59,21 @@
         "form": "trauma_inj",
         "link_field": "tinj_run",
         "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/AntecedentEvents/AntecedentEvent": {
+        "form": "ecpr_ante",
+        "link_field": "ea_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CMconditions/CMcondition": {
+        "form": "ecpr_cmc",
+        "link_field": "ec_run",
+        "key_field": ""
+      },
+      "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/ECPRMedications/ECPRMedication": {
+        "form": "ecpr_med",
+        "link_field": "em_run",
+        "key_field": ""
       }
     }
   },
@@ -276,6 +291,69 @@
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/InitialPulselessRhythm": {
       "source": "ecpr_rhythm"
     },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/LAInHospital": {
+      "source": "ecpr_la_inhosp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/LAICUDesc": {
+      "source": "ecpr_la_icu"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CDInHospital": {
+      "source": "ecpr_cd_inhosp"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CDICUDesc": {
+      "source": "ecpr_cd_icu"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/RhythmAtTimeCannulation": {
+      "source": "ecpr_rhythm_cann"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/EndTidalCO2Monitoring": {
+      "source": "ecpr_etco2"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/ETCO2": {
+      "source": "ecpr_etco2val"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/InvasiveArterialAccess": {
+      "source": "ecpr_art_acc"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/DBPflowStart": {
+      "source": "ecpr_dbpflow"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CerebralNIRS": {
+      "source": "ecpr_nirs"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/NIRS": {
+      "source": "ecpr_nirsval"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CPRFeedbackDevice": {
+      "source": "ecpr_cprfb"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/SignsOfLifePreECLS": {
+      "source": "ecpr_signs"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/NeuromuscularBlockadeUse": {
+      "source": "ecpr_nmb"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/NeurologyNoNeurologicInvestigation": {
+      "source": "ecpr_neuro"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/TempManagement": {
+      "source": "ecpr_temp_mgmt"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/HighestTemp24Hrs": {
+      "source": "ecpr_temp_hi"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/LowestTemp24Hrs": {
+      "source": "ecpr_temp_lo"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/AntecedentEvents/AntecedentEvent/EventId": {
+      "source": "ea_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/CMconditions/CMcondition/ConditionId": {
+      "source": "ec_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/ECPR2020Addenda/ECPRMedications/ECPRMedication/MedicationId": {
+      "source": "em_code"
+    },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/DateOfTrauma": {
       "source": "trauma_dt"
     },
@@ -293,6 +371,45 @@
     },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/TraumaRelatedInjuriesList/TraumaRelatedInjury/CodeId": {
       "source": "tinj_code"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISHead": {
+      "source": "trauma_ais_head"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISFace": {
+      "source": "trauma_ais_face"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISNeck": {
+      "source": "trauma_ais_neck"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISThorax": {
+      "source": "trauma_ais_thorax"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISAbdomen": {
+      "source": "trauma_ais_abd"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISSpine": {
+      "source": "trauma_ais_spine"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISUpperExtremity": {
+      "source": "trauma_ais_ue"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISLowerExtremity": {
+      "source": "trauma_ais_le"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/AISExternalOther": {
+      "source": "trauma_ais_ext"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/PatientSurgicalProcedure": {
+      "source": "trauma_surg"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/DamageControlSurgery": {
+      "source": "trauma_dcs"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/ReceivedBP24": {
+      "source": "trauma_bp24"
+    },
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/TraumaAddenda/ReceivedBP72": {
+      "source": "trauma_bp72"
     },
     "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/WeightUnknown": {
       "const": "0"

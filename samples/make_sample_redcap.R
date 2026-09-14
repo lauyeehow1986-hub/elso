@@ -40,8 +40,8 @@ runs <- data.frame(
   comp_enabled = c("1", "1", "0", "1"),        # ComplicationsEnabled (1 where a run has complications)
   inf_enabled  = c("0", "0", "0", "0"),        # InfectionsEnabled (no infections in this sample)
   # --- run-level minimum dataset ELSO's import validator requires (every run) ---
-  adm_wt       = c("70", "80", "80", "40"),    # RunInfo AdmissionWeight (kg)
-  adm_ht       = c("170","175","175","150"),   # RunInfo AdmissionHeight (cm)
+  adm_wt       = c("70", "80", "80", "65"),    # RunInfo AdmissionWeight (kg)
+  adm_ht       = c("170","175","175","168"),   # RunInfo AdmissionHeight (cm; PT-0003 BMI ~23)
   pre_ph       = c("7.20","7.35","7.11","7.44"), pre_hco3 = c("22","24","20","26"),
   pre_vent     = c("1","1","1","1"),           # VentilatorType code
   pre_sbp      = c("90","100","85","95"),  pre_dbp = c("55","60","50","58"),
@@ -70,16 +70,54 @@ runs <- data.frame(
   # ECPR-2020 addendum scalars — populated ONLY for PT-0002 run 2 (a non-cardiac
   # run) so ecpr-including profiles differ; blank elsewhere -> that optional
   # ECPR2020Addenda block is omitted for the other runs.
-  ecpr_precip    = c("", "", "6", ""),                    # ECPR PrecipitatingEvent
+  ecpr_precip    = c("", "", "1", ""),                    # ECPR PrecipitatingEvent (ECPR code list; 1 per official sample)
   ecpr_witnessed = c("", "", "1", ""),                    # WitnessedArrest (Yes)
   ecpr_arrest_dt = c("", "", "10/02/2024 07:00:00", ""),  # ArrestDateTime (before run-2 mode start)
-  ecpr_cpr       = c("", "", "1", ""),                    # CPR performed
+  ecpr_cpr       = c("", "", "60", ""),                   # CPR (total CPR minutes; within portal soft range 40-160)
   ecpr_rhythm    = c("", "", "1", ""),                    # InitialPulselessRhythm
+  # Additional ECPR2020Addenda scalars the ELSO portal requires once the block is
+  # present (values mirror the official spec sample). Location of arrest uses the
+  # in-hospital ICU variant (avoids the out-of-hospital OOHCA nested list).
+  ecpr_la_inhosp   = c("", "", "5", ""),   # LAInHospital (ICU option; pairs with LAICUDesc)
+  ecpr_la_icu      = c("", "", "1", ""),   # LAICUDesc (valid only when In-Hospital = ICU)
+  ecpr_cd_inhosp   = c("", "", "5", ""),   # CDInHospital (second location question; ICU option)
+  ecpr_cd_icu      = c("", "", "1", ""),   # CDICUDesc
+  ecpr_rhythm_cann = c("", "", "1", ""),   # RhythmAtTimeCannulation
+  ecpr_etco2       = c("", "", "1", ""),   # EndTidalCO2Monitoring
+  ecpr_etco2val    = c("", "", "1", ""),   # ETCO2 (value; required when monitoring = 1)
+  ecpr_art_acc     = c("", "", "1", ""),   # InvasiveArterialAccess
+  ecpr_dbpflow     = c("", "", "60", ""),  # DBPflowStart (mmHg; within portal soft range 5-110)
+  ecpr_nirs        = c("", "", "1", ""),   # CerebralNIRS
+  ecpr_nirsval     = c("", "", "1", ""),   # NIRS (value; required when CerebralNIRS = 1)
+  ecpr_cprfb       = c("", "", "1", ""),   # CPRFeedbackDevice (must be 1 for CPR to be set)
+  ecpr_signs       = c("", "", "0", ""),   # SignsOfLifePreECLS
+  ecpr_nmb         = c("", "", "1", ""),   # NeuromuscularBlockadeUse
+  ecpr_neuro       = c("", "", "1", ""),   # NeurologyNoNeurologicInvestigation
+  ecpr_temp_mgmt   = c("", "", "1", ""),   # TempManagement
+  ecpr_temp_hi     = c("", "", "2", ""),   # HighestTemp24Hrs
+  ecpr_temp_lo     = c("", "", "1", ""),   # LowestTemp24Hrs
   # Trauma addendum scalars — populated ONLY for PT-0003 run 1.
   trauma_dt      = c("", "", "", "18/03/2024 20:00:00"),  # DateOfTrauma (before mode start)
   trauma_blunt   = c("", "", "", "1"),                    # MechanismBlunt
   trauma_pen     = c("", "", "", "0"),                    # MechanismPenetrating
   trauma_burns   = c("", "", "", "0"),                    # MechanismBurns
+  # AIS (Abbreviated Injury Scale) body-region rates, each 0-6; all required by
+  # the ELSO portal once TraumaAddenda is present.
+  trauma_ais_head   = c("", "", "", "2"),   # AISHead
+  trauma_ais_face   = c("", "", "", "1"),   # AISFace
+  trauma_ais_neck   = c("", "", "", "0"),   # AISNeck
+  trauma_ais_thorax = c("", "", "", "3"),   # AISThorax
+  trauma_ais_abd    = c("", "", "", "2"),   # AISAbdomen
+  trauma_ais_spine  = c("", "", "", "1"),   # AISSpine
+  trauma_ais_ue     = c("", "", "", "1"),   # AISUpperExtremity
+  trauma_ais_le     = c("", "", "", "2"),   # AISLowerExtremity
+  trauma_ais_ext    = c("", "", "", "0"),   # AISExternalOther
+  # Option fields (No = 0) — chosen to avoid the surgical-procedure / blood-product
+  # sub-list requirements that a Yes would trigger.
+  trauma_surg    = c("", "", "", "0"),      # PatientSurgicalProcedure
+  trauma_dcs     = c("", "", "", "1"),      # DamageControlSurgery (code list has no 0; 1 = Yes)
+  trauma_bp24    = c("", "", "", "0"),      # ReceivedBP24
+  trauma_bp72    = c("", "", "", "0"),      # ReceivedBP72
   stringsAsFactors = FALSE)
 
 complications <- data.frame(
@@ -179,6 +217,22 @@ trauma_inj <- data.frame(
   tinj_code  = "1",            # TraumaRelatedInjury/CodeId
   stringsAsFactors = FALSE)
 
+# ECPR-2020 nested lists (attach to PT-0002 run 2 via *_run -> run_no). Each is a
+# run-level list inside ECPR2020Addenda; the ELSO portal requires >=1 entry in
+# AntecedentEvents, CMconditions and ECPRMedications when the block is present.
+ecpr_ante <- data.frame(
+  patient_id = "ECMO-PT-0002", ea_run = "2",
+  ea_code    = "1",            # AntecedentEvent/EventId
+  stringsAsFactors = FALSE)
+ecpr_cmc <- data.frame(
+  patient_id = "ECMO-PT-0002", ec_run = "2",
+  ec_code    = "1",            # CMcondition/ConditionId
+  stringsAsFactors = FALSE)
+ecpr_med <- data.frame(
+  patient_id = "ECMO-PT-0002", em_run = "2",
+  em_code    = "2",            # ECPRMedication/MedicationId
+  stringsAsFactors = FALSE)
+
 ## ---- data dictionary + choices ---------------------------------------------
 codelists <- list(
   sex   = c("0"="Unknown","1"="Male","2"="Female"),
@@ -270,6 +324,40 @@ dd <- rbind(dd, data.frame(
                "text","text","text","text"),
   choices  = c(rep("",13)),
   stringsAsFactors = FALSE))
+dd <- rbind(dd, data.frame(
+  variable = c("ecpr_la_inhosp","ecpr_la_icu","ecpr_cd_inhosp","ecpr_cd_icu",
+               "ecpr_rhythm_cann","ecpr_etco2","ecpr_etco2val","ecpr_art_acc","ecpr_dbpflow",
+               "ecpr_nirs","ecpr_nirsval","ecpr_cprfb","ecpr_signs","ecpr_nmb",
+               "ecpr_neuro","ecpr_temp_mgmt","ecpr_temp_hi","ecpr_temp_lo",
+               "ea_run","ea_code","ec_run","ec_code","em_run","em_code"),
+  form_name= c(rep("run",18),
+               "ecpr_ante","ecpr_ante","ecpr_cmc","ecpr_cmc","ecpr_med","ecpr_med"),
+  label    = c("ECPR location of arrest in-hospital","ECPR location ICU description",
+               "ECPR second location in-hospital","ECPR second location ICU description",
+               "ECPR rhythm at cannulation","ECPR end-tidal CO2 monitoring","ECPR ETCO2 value",
+               "ECPR invasive arterial access","ECPR DBP at flow start","ECPR cerebral NIRS",
+               "ECPR NIRS value","ECPR CPR feedback device","ECPR signs of life pre-ECLS",
+               "ECPR neuromuscular blockade use","ECPR no neurologic investigation",
+               "ECPR temperature management","ECPR highest temp 24h","ECPR lowest temp 24h",
+               "ECPR antecedent run","ECPR antecedent event code",
+               "ECPR co-morbid run","ECPR co-morbid condition code",
+               "ECPR medication run","ECPR medication code"),
+  type     = c(rep("text",24)),
+  choices  = c(rep("",24)),
+  stringsAsFactors = FALSE))
+dd <- rbind(dd, data.frame(
+  variable = c("trauma_ais_head","trauma_ais_face","trauma_ais_neck","trauma_ais_thorax",
+               "trauma_ais_abd","trauma_ais_spine","trauma_ais_ue","trauma_ais_le","trauma_ais_ext",
+               "trauma_surg","trauma_dcs","trauma_bp24","trauma_bp72"),
+  form_name= c(rep("run",13)),
+  label    = c("Trauma AIS head","Trauma AIS face","Trauma AIS neck","Trauma AIS thorax",
+               "Trauma AIS abdomen","Trauma AIS spine","Trauma AIS upper extremity",
+               "Trauma AIS lower extremity","Trauma AIS external/other",
+               "Trauma patient surgical procedure","Trauma damage control surgery",
+               "Trauma received blood products 24h","Trauma received blood products 72h"),
+  type     = c(rep("text",13)),
+  choices  = c(rep("",13)),
+  stringsAsFactors = FALSE))
 write.csv(dd, file.path(outdir, "sample_redcap_dictionary.csv"), row.names = FALSE)
 
 ## ---- flat records CSV (REDCap-style long export) ---------------------------
@@ -299,7 +387,10 @@ flat <- rbind(bind_form(patients, "demographics"),
               bind_form(consoles, "consoles"),
               bind_form(cardiac_dx, "cardiac_dx"),
               bind_form(trauma_ind, "trauma_ind"),
-              bind_form(trauma_inj, "trauma_inj"))
+              bind_form(trauma_inj, "trauma_inj"),
+              bind_form(ecpr_ante, "ecpr_ante"),
+              bind_form(ecpr_cmc, "ecpr_cmc"),
+              bind_form(ecpr_med, "ecpr_med"))
 write.csv(flat, file.path(outdir, "sample_redcap_records.csv"), row.names = FALSE)
 
 ## ---- REDCap ODM XML --------------------------------------------------------
@@ -322,7 +413,8 @@ for (v in names(choice_map)) {
   cl_defs <- c(cl_defs, sprintf('<CodeList OID="cl_%s" Name="%s" DataType="text">%s</CodeList>', v, v, items))
 }
 forms <- c("demographics","run","complication","diagnosis","cath","cath_dx",
-           "mode","pumps","lungs","consoles","cardiac_dx","trauma_ind","trauma_inj")
+           "mode","pumps","lungs","consoles","cardiac_dx","trauma_ind","trauma_inj",
+           "ecpr_ante","ecpr_cmc","ecpr_med")
 form_defs <- character(0); ig_defs <- character(0)
 for (f in forms) {
   vars <- dd$variable[dd$form_name == f]
@@ -370,6 +462,12 @@ for (pid in patients$patient_id) {
   for (k in seq_along(ti)) blocks <- paste0(blocks, form_block(trauma_ind, ti[k], "trauma_ind", k))
   tj <- which(trauma_inj$patient_id == pid)
   for (k in seq_along(tj)) blocks <- paste0(blocks, form_block(trauma_inj, tj[k], "trauma_inj", k))
+  ea <- which(ecpr_ante$patient_id == pid)
+  for (k in seq_along(ea)) blocks <- paste0(blocks, form_block(ecpr_ante, ea[k], "ecpr_ante", k))
+  ec <- which(ecpr_cmc$patient_id == pid)
+  for (k in seq_along(ec)) blocks <- paste0(blocks, form_block(ecpr_cmc, ec[k], "ecpr_cmc", k))
+  em <- which(ecpr_med$patient_id == pid)
+  for (k in seq_along(em)) blocks <- paste0(blocks, form_block(ecpr_med, em[k], "ecpr_med", k))
   subj_blocks <- c(subj_blocks, sprintf(
     '<SubjectData SubjectKey="%s"><StudyEventData StudyEventOID="ev.baseline">%s</StudyEventData></SubjectData>',
     pid, blocks))
@@ -391,6 +489,7 @@ cat("Wrote samples/sample_redcap.odm.xml,",
 cat("Patients: 3 (PT-0002 has 2 runs); complications & diagnoses link via *_run.\n")
 cat("Cardiac addenda: caths link to runs via cc_run; nested cath_dx link via",
     "dx_cath -> cath_id (PT-0002 run 1 has 2 caths; CATH-1A has 2 diagnostics).\n")
-cat("ECPR-2020 addenda: run-level scalars on PT-0002 run 2.",
-    "Trauma addenda: run-level scalars on PT-0003 run 1 + nested ECLSIndicationTrauma",
+cat("ECPR-2020 addenda: run-level scalars on PT-0002 run 2 + nested AntecedentEvents",
+    "(ecpr_ante), CMconditions (ecpr_cmc) and ECPRMedications (ecpr_med).\n")
+cat("Trauma addenda: run-level scalars on PT-0003 run 1 + nested ECLSIndicationTrauma",
     "(trauma_ind) and TraumaRelatedInjury (trauma_inj).\n")
