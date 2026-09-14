@@ -188,3 +188,29 @@ el_apply_addenda_profile <- function(doc, include = names(el_addenda_tokens())) 
   }
   doc
 }
+
+# Build the full doc once, then write one pruned+validated file per profile.
+# Returns a data.frame(profile,token,xsd_valid,n_error,file). Each file is
+# written even if invalid, so the operator can inspect failures.
+el_generate_all_combinations <- function(cat, hierarchy, map = list(),
+                                          recode = list(), datefmt = list(),
+                                          out_dir, xsd_path,
+                                          prefix = "elso_import__") {
+  dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+  full_str <- as.character(el_generate_xml(cat, hierarchy, map, recode, datefmt))
+  combos <- el_addenda_combinations()
+  rows <- lapply(combos, function(cb) {
+    doc <- el_apply_addenda_profile(read_xml(full_str), cb$include)
+    xsd <- el_validate_xsd(doc, xsd_path)
+    iss <- tryCatch(el_semantic_check(cat, doc),
+                    error = function(e) data.frame())
+    n_err <- if (is.data.frame(iss) && nrow(iss))
+      sum(iss$severity == "error", na.rm = TRUE) else 0L
+    fn <- file.path(out_dir, paste0(prefix, cb$token, ".xml"))
+    el_write_xml(doc, fn)
+    data.frame(profile = cb$label, token = cb$token,
+               xsd_valid = isTRUE(xsd$ok), n_error = as.integer(n_err),
+               file = basename(fn), stringsAsFactors = FALSE)
+  })
+  do.call(rbind, rows)
+}
