@@ -154,3 +154,37 @@ el_write_xml <- function(doc, path) {
   write_xml(doc, path, options = "format", encoding = "UTF-8")
   path
 }
+
+# ---- addenda upload profiles ------------------------------------------------
+# The three optional run-level addenda, as token -> element local-name.
+el_addenda_tokens <- function()
+  c(cardiac = "CardiacAddenda", ecpr = "ECPR2020Addenda", trauma = "TraumaAddenda")
+
+# The 8 profiles (main form always present; each addendum in or out), in a
+# stable order. Each is list(include=<tokens>, token=<filename token>, label=).
+el_addenda_combinations <- function() {
+  order_tokens <- list(
+    character(0), "cardiac", "ecpr", "trauma",
+    c("cardiac","ecpr"), c("cardiac","trauma"), c("ecpr","trauma"),
+    c("cardiac","ecpr","trauma"))
+  lbl <- c(cardiac = "Cardiac", ecpr = "ECPR 2020", trauma = "Trauma")
+  lapply(order_tokens, function(inc) {
+    tok <- if (length(inc) == 0L) "main" else paste(inc, collapse = "_")
+    label <- if (length(inc) == 0L) "Main only"
+             else paste("Main +", paste(unname(lbl[inc]), collapse = " + "))
+    list(include = inc, token = tok, label = label)
+  })
+}
+
+# Remove every *Addenda subtree whose token is NOT in `include`, wherever it
+# appears. Mutates and returns `doc`. include=character(0) -> main-only.
+# Select by local-name() because the doc is default-namespaced (urn:run-schema).
+el_apply_addenda_profile <- function(doc, include = names(el_addenda_tokens())) {
+  toks <- el_addenda_tokens()
+  drop <- toks[setdiff(names(toks), include)]
+  for (ln in drop) {
+    nodes <- xml2::xml_find_all(doc, sprintf("//*[local-name()='%s']", ln))
+    if (length(nodes)) xml2::xml_remove(nodes)
+  }
+  doc
+}
