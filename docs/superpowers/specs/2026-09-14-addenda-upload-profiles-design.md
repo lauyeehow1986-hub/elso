@@ -1,7 +1,9 @@
 # Design — Addenda upload profiles (all 8 combinations)
 
 Date: 2026-09-14
-Status: approved (design), pending spec review
+Status: implemented 2026-09-15 (commit bb29c14). All 8 addenda combinations verified
+clean on the ELSO public test portal (registry.elso.org/xmlimporttestpublic) — zero
+errors, zero warnings — and both headless test suites pass.
 
 ## Goal
 
