@@ -121,6 +121,12 @@ ui <- page_navbar(
 
   nav_panel("7 \u00b7 Generate XML", icon = icon("file-code"),
     card(card_header("ELSO import XML"),
+      checkboxGroupInput("addenda_incl", "Include addenda",
+        c("Cardiac" = "cardiac", "ECPR 2020" = "ecpr", "Trauma" = "trauma"),
+        selected = c("cardiac", "ecpr", "trauma"), inline = TRUE),
+      div(class = "small text-muted mb-2",
+          "Untick an addendum to omit it from the generated file. ",
+          "The main ELSO form is always included."),
       div(actionButton("btn_generate", "Generate", class = "btn-primary"),
           downloadButton("dl_xml", "Download .xml")),
       textOutput("gen_info"),
@@ -335,7 +341,8 @@ server <- function(input, output, session) {
     }
     rv$binding <- build_binding()
     hier <- el_build_hierarchy(parsed, rv$binding)
-    el_generate_xml(CAT, hier, rv$map, rv$recode, rv$datefmt)
+    doc <- el_generate_xml(CAT, hier, rv$map, rv$recode, rv$datefmt)
+    el_apply_addenda_profile(doc, input$addenda_incl %||% names(el_addenda_tokens()))
   }
 
   # ---- validate ----
