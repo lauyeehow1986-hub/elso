@@ -64,7 +64,10 @@ hier <- list(list(
     row = setNames(character(0), character(0)),
     runs = list(list(row = c(RunNo = "1"), coll = list()))))))
 res <- el_generate_all_combinations(
-  CAT, hier, map = list(UniqueId = list(source = "UniqueId")),
+  CAT, hier, map = list(
+    "PatientXML/UniqueId" = list(source = "UniqueId"),
+    "PatientXML/HospitalizationList/HospitalizationXML/RunList/RunXML/RunInfo/RunNo" =
+      list(source = "RunNo")),
   recode = list(), datefmt = list(), out_dir = tmp,
   xsd_path = getOption("el.xsd_path"))
 stopifnot(is.data.frame(res), nrow(res) == 8L)
@@ -73,6 +76,7 @@ files <- list.files(tmp, pattern = "\\.xml$")
 stopifnot(length(files) == 8L)
 stopifnot("elso_import__main.xml" %in% files)
 stopifnot("elso_import__cardiac_ecpr_trauma.xml" %in% files)
+stopifnot(all(res$xsd_valid))   # generator stays XSD-valid from a sparse map, every profile
 cat("test batch: PASS\n")
 
 cat("test_addenda_profile: PASS\n")
