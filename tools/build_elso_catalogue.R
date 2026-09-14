@@ -117,8 +117,13 @@ walk(tree, character(0), "PatientXML", NA_character_)
 leaves <- do.call(rbind, rows)
 
 # infer a working "kind" for the app (all XSD types are string)
-temporal <- grepl("Date|Time|DT$", leaves$name) | leaves$name %in%
-  c("AdmitDate","DischargeDate","DeathDate","ArrestDateTime")
+# Some fields contain "Time" in the name but are categorical codes, not
+# timestamps (e.g. rhythm/pulse "at time of cannulation"). Excluding them keeps
+# the generator from date-parsing (and silently dropping) their coded values.
+non_temporal <- c("RhythmAtTimeCannulation", "PulseTimeOfCannulation")
+temporal <- (grepl("Date|Time|DT$", leaves$name) | leaves$name %in%
+  c("AdmitDate","DischargeDate","DeathDate","ArrestDateTime")) &
+  !(leaves$name %in% non_temporal)
 date_only <- leaves$name %in% c("Birthdate","ProcedureDate","ProcDate","LVDate")
 leaves$kind <- ifelse(date_only, "date",
                 ifelse(temporal, "datetime", "string"))
